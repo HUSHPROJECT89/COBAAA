@@ -1,299 +1,727 @@
-// 15 soal per mapel (bisa tambah/edit soal di sini!)
-const questionsBySubject = {
-  umum: [
-    {question: "Binatang yang bisa hidup di air dan di darat disebut?", choices: ["Reptil", "Amfibi", "Mamalia", "Aves"], answer: 1},
-    {question: "Planet terbesar di tata surya adalah?", choices: ["Mars", "Bumi", "Jupiter", "Venus"], answer: 2},
-    {question: "Benua terbesar di dunia adalah?", choices: ["Afrika", "Asia", "Eropa", "Australia"], answer: 1},
-    {question: "Ibukota provinsi Jawa Tengah adalah?", choices: ["Semarang", "Surakarta", "Magelang", "Salatiga"], answer: 0},
-    {question: "Hari Kemerdekaan Indonesia diperingati setiap tanggal?", choices: ["17 Agustus", "10 November", "1 Juni", "21 April"], answer: 0},
-    {question: "Satuan arus listrik adalah?", choices: ["Watt", "Volt", "Ohm", "Ampere"], answer: 3},
-    {question: "Siapakah penemu bola lampu pijar?", choices: ["Albert Einstein", "Thomas Edison", "Isaac Newton", "Galileo Galilei"], answer: 1},
-    {question: "Alat musik tradisional dari Jawa Barat adalah?", choices: ["Angklung", "Gamelan", "Sasando", "Tifa"], answer: 0},
-    {question: "Sungai terpanjang di Indonesia?", choices: ["Kapuas", "Mahakam", "Citarum", "Barito"], answer: 0},
-    {question: "Bahan utama membuat kaca adalah?", choices: ["Pasir", "Besi", "Kayu", "Kapur"], answer: 0},
-    {question: "Pulau terkecil di Indonesia adalah?", choices: ["Samosir", "Simping", "Weh", "Bali"], answer: 1},
-    {question: "Hari Sumpah Pemuda diperingati tiap tanggal?", choices: ["28 Oktober", "17 Agustus", "2 Mei", "10 November"], answer: 0},
-    {question: "Organisasi ASEAN berdiri tahun?", choices: ["1965", "1967", "1970", "1980"], answer: 1},
-    {question: "Pahlawan perempuan dari Aceh adalah?", choices: ["Dewi Sartika", "R.A. Kartini", "Cut Nyak Dien", "Martha Christina Tiahahu"], answer: 2},
-    {question: "Ibukota Australia adalah?", choices: ["Sydney", "Melbourne", "Canberra", "Perth"], answer: 2}
-  ],
-  matematika: [
-    {question: "Hasil dari 12 x 8 adalah?", choices: ["96", "108", "104", "88"], answer: 0},
-    {question: "Akar pangkat dua dari 81?", choices: ["7", "8", "9", "10"], answer: 2},
-    {question: "Bilangan prima terkecil adalah?", choices: ["0", "1", "2", "3"], answer: 2},
-    {question: "Rumus luas lingkaran adalah?", choices: ["πr²", "2πr", "πd", "r²"], answer: 0},
-    {question: "Hasil dari 15 + 27 adalah?", choices: ["32", "37", "42", "45"], answer: 3},
-    {question: "Jika x = 5, maka nilai dari 2x + 3 = ...", choices: ["8", "10", "13", "15"], answer: 2},
-    {question: "Hasil 144 : 12 = ...", choices: ["10", "11", "12", "13"], answer: 2},
-    {question: "Rumus keliling persegi panjang?", choices: ["2(p+l)", "p x l", "p + l", "2p x 2l"], answer: 0},
-    {question: "Hasil 2³ adalah?", choices: ["6", "8", "9", "4"], answer: 1},
-    {question: "Sudut siku-siku besarnya ...", choices: ["30°", "90°", "45°", "180°"], answer: 1},
-    {question: "Hasil 5² + 3² adalah?", choices: ["25", "34", "35", "49"], answer: 1},
-    {question: "Hasil 100 – 24 : 4 + 6 = ?", choices: ["90", "100", "110", "92"], answer: 3},
-    {question: "Angka Romawi dari 50 adalah?", choices: ["X", "L", "C", "D"], answer: 1},
-    {question: "Hasil 2/3 + 1/3 adalah?", choices: ["1", "2", "3", "4"], answer: 0},
-    {question: "Sisi terpanjang pada segitiga siku-siku disebut ...", choices: ["Alas", "Tinggi", "Hipotenusa", "Sisi"], answer: 2}
-  ],
-  ipa: [
-    {question: "Bagian tumbuhan tempat fotosintesis?", choices: ["Akar", "Batang", "Daun", "Bunga"], answer: 2},
-    {question: "Alat ukur kuat arus listrik adalah?", choices: ["Voltmeter", "Amperemeter", "Ohmmeter", "Barometer"], answer: 1},
-    {question: "Proses perubahan air jadi uap disebut?", choices: ["Kondensasi", "Presipitasi", "Evaporasi", "Transpirasi"], answer: 2},
-    {question: "Hewan yang mengalami metamorfosis sempurna?", choices: ["Kupu-kupu", "Kucing", "Ayam", "Ikan"], answer: 0},
-    {question: "Manusia bernafas menggunakan?", choices: ["Insang", "Paru-paru", "Trakea", "Kulit"], answer: 1},
-    {question: "Benda yang ditarik magnet disebut?", choices: ["Isolator", "Konduktor", "Fermagnetik", "Nonmagnetik"], answer: 2},
-    {question: "Fotosintesis membutuhkan ...", choices: ["Air, udara, cahaya", "Air, tanah, pupuk", "Udara, tanah, cahaya", "Air, udara, tanah"], answer: 0},
-    {question: "Gaya yang menghambat gerak benda disebut ...", choices: ["Gaya otot", "Gaya berat", "Gaya gesek", "Gaya pegas"], answer: 2},
-    {question: "Alat pernapasan pada ikan adalah ...", choices: ["Insang", "Paru-paru", "Trakea", "Spirakel"], answer: 0},
-    {question: "Planet terdekat dengan matahari adalah ...", choices: ["Venus", "Merkurius", "Mars", "Bumi"], answer: 1},
-    {question: "Bagian mata yang berfungsi mengatur banyak cahaya?", choices: ["Kornea", "Lensa", "Iris", "Retina"], answer: 2},
-    {question: "Bagian telinga untuk menangkap getaran suara?", choices: ["Gendang telinga", "Tulang martil", "Saluran telinga", "Koklea"], answer: 0},
-    {question: "Jenis tulang keras disebut ...", choices: ["Tulang rawan", "Tulang sejati", "Tulang lunak", "Tulang sendi"], answer: 1},
-    {question: "Benda cair yang mudah menguap disebut ...", choices: ["Volatil", "Padat", "Gas", "Plasma"], answer: 0},
-    {question: "Organ pencernaan pertama pada manusia adalah ...", choices: ["Lambung", "Mulut", "Usus", "Kerongkongan"], answer: 1}
-  ],
-  ips: [
-    {question: "Ibukota negara Jepang adalah?", choices: ["Osaka", "Tokyo", "Kyoto", "Hokkaido"], answer: 1},
-    {question: "Bapak Koperasi Indonesia?", choices: ["Soekarno", "Moh. Hatta", "Ki Hajar Dewantara", "Sutan Syahrir"], answer: 1},
-    {question: "Sungai terpanjang di Indonesia?", choices: ["Kapuas", "Barito", "Mahakam", "Musi"], answer: 0},
-    {question: "ASEAN organisasi negara di kawasan ...", choices: ["Asia Timur", "Asia Selatan", "Asia Tenggara", "Asia Barat"], answer: 2},
-    {question: "Mata uang Thailand?", choices: ["Ringgit", "Baht", "Dolar", "Yen"], answer: 1},
-    {question: "Gunung tertinggi di dunia?", choices: ["Kilimanjaro", "Everest", "Elbrus", "Cartenz"], answer: 1},
-    {question: "Negara dengan penduduk terbanyak di dunia?", choices: ["India", "Amerika", "Tiongkok", "Indonesia"], answer: 2},
-    {question: "Hari Sumpah Pemuda diperingati pada?", choices: ["17 Agustus", "28 Oktober", "2 Mei", "10 November"], answer: 1},
-    {question: "Benua terkecil di dunia?", choices: ["Asia", "Australia", "Eropa", "Afrika"], answer: 1},
-    {question: "Ibukota Vietnam adalah?", choices: ["Ho Chi Minh", "Hanoi", "Da Nang", "Hue"], answer: 1},
-    {question: "Candi Borobudur terletak di?", choices: ["Jawa Timur", "Jawa Tengah", "Jawa Barat", "Bali"], answer: 1},
-    {question: "Negara kepulauan terbesar di dunia?", choices: ["Jepang", "Filipina", "Indonesia", "Maladewa"], answer: 2},
-    {question: "Tanggal Proklamasi RI?", choices: ["16 Agustus 1945", "17 Agustus 1945", "18 Agustus 1945", "10 November 1945"], answer: 1},
-    {question: "Lambang negara Indonesia adalah?", choices: ["Garuda", "Banteng", "Macan", "Elang"], answer: 0},
-    {question: "Tokoh Sumpah Pemuda dari Minangkabau?", choices: ["Moh. Yamin", "Soegondo", "Ki Hajar", "Sutan Syahrir"], answer: 0}
-  ],
-  bahasa: [
-    {question: "Antonim dari 'besar' adalah?", choices: ["Tinggi", "Kecil", "Lebar", "Panjang"], answer: 1},
-    {question: "Kalimat yang benar adalah ...", choices: ["Saya makan nasi.", "Nasi makan saya.", "Saya nasi makan.", "Makan saya nasi."], answer: 0},
-    {question: "Sinonim kata 'indah' adalah?", choices: ["Jelek", "Bagus", "Buruk", "Sedih"], answer: 1},
-    {question: "Kata baku dari 'aktifitas' adalah?", choices: ["Aktifitas", "Aktivitas", "Aktif", "Aktivas"], answer: 1},
-    {question: "Peribahasa: 'Bagai air di daun talas' artinya ...", choices: ["Setia", "Labil", "Rajin", "Pemberani"], answer: 1},
-    {question: "Contoh kata serapan dari bahasa Inggris?", choices: ["Sepeda", "Televisi", "Meja", "Pintu"], answer: 1},
-    {question: "Kata baku dari 'resiko' adalah?", choices: ["Resiko", "Risiko", "Riziko", "Resiko"], answer: 1},
-    {question: "Lawan kata 'senang' adalah?", choices: ["Bahagia", "Sedih", "Suka", "Cinta"], answer: 1},
-    {question: "Sinonim 'pandai' adalah?", choices: ["Bodoh", "Pintar", "Jahat", "Baik"], answer: 1},
-    {question: "Lidah tidak bertulang artinya ...", choices: ["Suka makan", "Tidak punya pendirian", "Mudah berucap", "Suka bicara"], answer: 2},
-    {question: "Kata dasar dari 'menyanyi'?", choices: ["Nyanyi", "Menyanyi", "Bernyanyi", "Penyanyi"], answer: 0},
-    {question: "Kata ulang berimbuhan terdapat pada ...", choices: ["Berjalan-jalan", "Rumah-rumah", "Lari-lari", "Mobil-mobil"], answer: 0},
-    {question: "Kalimat imperatif adalah ...", choices: ["Perintah", "Laporan", "Pertanyaan", "Seruan"], answer: 0},
-    {question: "Sinonim kata 'berani' adalah?", choices: ["Takut", "Gentar", "Pemberani", "Penakut"], answer: 2},
-    {question: "Antonim 'cepat' adalah?", choices: ["Lambat", "Ringan", "Kuat", "Pendek"], answer: 0}
-  ],
-  inggris: [
-    {question: "What is the English word for 'meja'?", choices: ["Chair", "Table", "Book", "Window"], answer: 1},
-    {question: "Choose the correct sentence.", choices: ["He go to school.", "He goes to school.", "He going to school.", "He gone to school."], answer: 1},
-    {question: "The opposite of 'big' is ...", choices: ["Small", "Tall", "Long", "Short"], answer: 0},
-    {question: "Translate: 'Saya suka membaca buku.'", choices: ["I like reading books.", "I read like books.", "I am like book read.", "I like to books reading."], answer: 0},
-    {question: "What is the capital city of England?", choices: ["Liverpool", "London", "Manchester", "Berlin"], answer: 1},
-    {question: "Which is the correct plural of 'child'?", choices: ["Childs", "Childes", "Children", "Childrens"], answer: 2},
-    {question: "The color of the sky is ...", choices: ["Green", "Blue", "Red", "Yellow"], answer: 1},
-    {question: "What time is it? 07:00", choices: ["Seven o'clock", "Six o'clock", "Eight o'clock", "Nine o'clock"], answer: 0},
-    {question: "Animal that barks is a ...", choices: ["Cat", "Dog", "Cow", "Bird"], answer: 1},
-    {question: "Which is a fruit?", choices: ["Carrot", "Potato", "Apple", "Cucumber"], answer: 2},
-    {question: "I ... to the market yesterday.", choices: ["go", "went", "going", "gone"], answer: 1},
-    {question: "She ... a beautiful voice.", choices: ["have", "has", "had", "having"], answer: 1},
-    {question: "Choose the correct negative: 'I am happy.'", choices: ["I am not happy.", "I not happy.", "I am happy not.", "Not I am happy."], answer: 0},
-    {question: "What is 'buku' in English?", choices: ["Book", "Bag", "Box", "Bus"], answer: 0},
-    {question: "We ... soccer every Sunday.", choices: ["play", "plays", "playing", "played"], answer: 0}
-  ]
-};
-
-// ===== LOGIC QUIZ ======
-let quizQuestions = [];
-let currentQuestion = 0;
-let selectedChoice = null;
-let score = 0;
-let currentSubject = null;
-let quizTime = 0; // in seconds
-let timerInterval = null;
-let timeLeft = 0;
-let isQuizFail = false;
-
-const subjectBox = document.getElementById('subject-box');
-const subjectBtns = document.querySelectorAll('.subject-btn');
-const timeBox = document.getElementById('time-box');
-const timeBtns = document.querySelectorAll('.time-btn');
-const backBtnTime = document.getElementById('back-btn-time');
-const quizBox = document.getElementById('quiz-box');
-const questionEl = document.getElementById('question');
-const choicesEl = document.getElementById('choices');
-const nextBtn = document.getElementById('next-btn');
-const resultBox = document.getElementById('result-box');
-const scoreEl = document.getElementById('score');
-const restartBtn = document.getElementById('restart-btn');
-const backBtnQuiz = document.getElementById('back-btn-quiz');
-const backBtnResult = document.getElementById('back-btn-result');
-const timerEl = document.getElementById('timer');
-const failBox = document.getElementById('fail-box');
-const retryBtn = document.getElementById('retry-btn');
-const failBackBtn = document.getElementById('fail-back-btn');
-
-// Pilih mapel
-subjectBtns.forEach(btn => {
-  btn.onclick = () => {
-    currentSubject = btn.getAttribute('data-subject');
-    subjectBox.classList.add('hidden');
-    timeBox.classList.remove('hidden');
-  };
-});
-
-// Pilih waktu
-timeBtns.forEach(btn => {
-  btn.onclick = () => {
-    quizTime = parseInt(btn.getAttribute('data-time'));
-    timeBox.classList.add('hidden');
-    startQuiz();
-  };
-});
-
-// Tombol "kembali" di menu waktu
-backBtnTime.onclick = () => {
-  currentSubject = null;
-  timeBox.classList.add('hidden');
-  subjectBox.classList.remove('hidden');
-};
-
-// START QUIZ
-function startQuiz() {
-  quizQuestions = [...questionsBySubject[currentSubject]];
-  shuffle(quizQuestions);
-  if (quizQuestions.length > 15) quizQuestions = quizQuestions.slice(0, 15);
-  currentQuestion = 0;
-  score = 0;
-  isQuizFail = false;
-  timerEl.classList.remove('timer-warning');
-  showTimer(quizTime);
-  timeLeft = quizTime;
-  quizBox.classList.remove('hidden');
-  resultBox.classList.add('hidden');
-  failBox.classList.add('hidden');
-  showQuestion(currentQuestion);
-  startTimer();
-}
-
-// Timer logic
-function startTimer() {
-  clearInterval(timerInterval);
-  updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimerDisplay();
-    if (timeLeft <= 10) {
-      timerEl.classList.add('timer-warning');
-    }
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      endQuizFail();
-    }
-  }, 1000);
-}
-
-function updateTimerDisplay() {
-  const min = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-  const sec = (timeLeft % 60).toString().padStart(2, '0');
-  timerEl.textContent = `${min}:${sec}`;
-}
-
-function showTimer(show) {
-  timerEl.parentElement.style.display = show ? 'flex' : 'none';
-}
-
-// Soal dan jawaban
-function showQuestion(index) {
-  showTimer(true);
-  const q = quizQuestions[index];
-  questionEl.textContent = `Soal ${index + 1} dari ${quizQuestions.length}: ${q.question}`;
-  choicesEl.innerHTML = '';
-  q.choices.forEach((choice, i) => {
-    const li = document.createElement('li');
-    const btn = document.createElement('button');
-    btn.className = "choice-btn";
-    btn.textContent = choice;
-    btn.onclick = () => selectChoice(i, btn);
-    li.appendChild(btn);
-    choicesEl.appendChild(li);
-  });
-  selectedChoice = null;
-  nextBtn.disabled = true;
-}
-
-function selectChoice(index, btn) {
-  selectedChoice = index;
-  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  nextBtn.disabled = false;
-}
-
-nextBtn.onclick = () => {
-  if (selectedChoice === quizQuestions[currentQuestion].answer) score++;
-  currentQuestion++;
-  if (currentQuestion < quizQuestions.length) {
-    showQuestion(currentQuestion);
-  } else {
-    endQuizSuccess();
+const soalBank = {
+  matematika: { [
+      // EASY
+      {question: "Hasil dari 12 x 8 adalah?", choices: ["96", "108", "104", "88"], answer: 0, diff: "easy"},
+      {question: "Bilangan prima terkecil adalah?", choices: ["0", "1", "2", "3"], answer: 2, diff: "easy"},
+      {question: "Akar pangkat dua dari 81?", choices: ["7", "8", "9", "10"], answer: 2, diff: "easy"},
+      {question: "Hasil penjumlahan 45 + 25 adalah?", choices: ["60", "70", "80", "90"], answer: 1, diff: "easy"},
+      {question: "Satuan panjang adalah?", choices: ["Gram", "Meter", "Liter", "Kilogram"], answer: 1, diff: "easy"},
+      {question: "Hasil dari 15 : 3 adalah?", choices: ["3", "4", "5", "6"], answer: 2, diff: "easy"},
+      {question: "Berapakah hasil dari 7 x 6?", choices: ["42", "36", "48", "56"], answer: 0, diff: "easy"},
+      {question: "Angka satuan dari 125 adalah?", choices: ["5", "2", "1", "0"], answer: 0, diff: "easy"},
+      {question: "Nilai dari 100 - 25 adalah?", choices: ["75", "65", "85", "95"], answer: 0, diff: "easy"},
+      {question: "Bilangan genap terkecil adalah?", choices: ["1", "2", "3", "4"], answer: 1, diff: "easy"},
+      // NORMAL
+      {question: "Rumus luas lingkaran adalah?", choices: ["πr²", "2πr", "πd", "r²"], answer: 0, diff: "normal"},
+      {question: "Hasil dari 15 + 27 adalah?", choices: ["32", "37", "42", "45"], answer: 3, diff: "normal"},
+      {question: "Berapakah hasil dari 25 x 4?", choices: ["100", "90", "110", "120"], answer: 0, diff: "normal"},
+      {question: "Akar dari 49 adalah?", choices: ["5", "6", "7", "8"], answer: 2, diff: "normal"},
+      {question: "Bilangan genap terkecil adalah?", choices: ["1", "2", "3", "4"], answer: 1, diff: "normal"},
+      {question: "Rumus keliling persegi adalah?", choices: ["4 x sisi", "2 x sisi", "sisi x sisi", "sisi + sisi"], answer: 0, diff: "normal"},
+      {question: "Luas persegi panjang dengan p=8, l=4 adalah?", choices: ["12", "32", "24", "16"], answer: 1, diff: "normal"},
+      {question: "Volume kubus dengan sisi 5cm adalah?", choices: ["125", "25", "15", "5"], answer: 0, diff: "normal"},
+      {question: "Sudut pada segitiga sama kaki yang bukan puncak adalah ...", choices: ["30°", "45°", "75°", "90°"], answer: 1, diff: "normal"},
+      {question: "Rumus volume balok?", choices: ["p x l x t", "p + l + t", "p x l", "l x t"], answer: 0, diff: "normal"},
+      {question: "Hasil dari 36 : 6 adalah?", choices: ["5", "6", "7", "8"], answer: 1, diff: "normal"},
+      {question: "Akar pangkat dua dari 64?", choices: ["6", "7", "8", "9"], answer: 2, diff: "normal"},
+      {question: "Bilangan ganjil terkecil?", choices: ["1", "2", "3", "4"], answer: 0, diff: "normal"},
+      {question: "Luas segitiga dengan alas 10, tinggi 6?", choices: ["30", "36", "60", "16"], answer: 0, diff: "normal"},
+      {question: "Keliling lingkaran dengan diameter 14 cm adalah?", choices: ["44 cm", "22 cm", "28 cm", "32 cm"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Sisi terpanjang pada segitiga siku-siku disebut ...", choices: ["Alas", "Tinggi", "Hipotenusa", "Sisi"], answer: 2, diff: "hard"},
+      {question: "Sudut pada segitiga sama sisi adalah ...", choices: ["30°", "60°", "90°", "120°"], answer: 1, diff: "hard"},
+      {question: "Volume tabung dengan diameter 14cm dan tinggi 10cm (π=22/7)?", choices: ["1540 cm³", "770 cm³", "980 cm³", "220 cm³"], answer: 0, diff: "hard"},
+      {question: "Jika keliling persegi adalah 40 cm, berapa panjang sisi?", choices: ["10 cm", "8 cm", "12 cm", "16 cm"], answer: 0, diff: "hard"},
+      {question: "Berapa jumlah sisi pada kubus?", choices: ["4", "6", "8", "12"], answer: 1, diff: "hard"},
+      {question: "Hasil dari 3³ adalah?", choices: ["6", "9", "27", "18"], answer: 2, diff: "hard"},
+      {question: "Berapa luas permukaan bola dengan jari-jari 7 cm? (π=22/7)", choices: ["616 cm²", "308 cm²", "154 cm²", "77 cm²"], answer: 0, diff: "hard"},
+      {question: "Berapa hasil dari 120 : 8?", choices: ["12", "14", "15", "16"], answer: 2, diff: "hard"},
+      {question: "Berapakah hasil dari 5² + 4²?", choices: ["41", "45", "49", "52"], answer: 0, diff: "hard"},
+      {question: "Berapa hasil dari 2 x (8 + 6)?", choices: ["28", "24", "30", "22"], answer: 1, diff: "hard"}
+    ],
+    5: [
+      // EASY
+      {question: "Hasil dari 25 x 4 adalah?", choices: ["100", "90", "110", "120"], answer: 0, diff: "easy"},
+      {question: "Akar dari 49 adalah?", choices: ["5", "6", "7", "8"], answer: 2, diff: "easy"},
+      {question: "Bilangan genap terkecil adalah?", choices: ["1", "2", "3", "4"], answer: 1, diff: "easy"},
+      {question: "Rumus keliling persegi adalah?", choices: ["4 x sisi", "2 x sisi", "sisi x sisi", "sisi + sisi"], answer: 0, diff: "easy"},
+      {question: "Luas persegi panjang dengan p=8, l=4 adalah?", choices: ["12", "32", "24", "16"], answer: 1, diff: "easy"},
+      {question: "Volume kubus dengan sisi 5cm adalah?", choices: ["125", "25", "15", "5"], answer: 0, diff: "easy"},
+      {question: "Sudut pada segitiga sama kaki yang bukan puncak adalah ...", choices: ["30°", "45°", "75°", "90°"], answer: 1, diff: "easy"},
+      {question: "Bilangan ganjil terkecil?", choices: ["1", "2", "3", "4"], answer: 0, diff: "easy"},
+      {question: "Keliling lingkaran dengan diameter 14 cm adalah?", choices: ["44 cm", "22 cm", "28 cm", "32 cm"], answer: 0, diff: "easy"},
+      {question: "Volume balok dengan p=5, l=4, t=3 adalah?", choices: ["60", "70", "80", "90"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Berapakah nilai dari 8 x 9?", choices: ["72", "81", "63", "69"], answer: 0, diff: "normal"},
+      {question: "Berapakah hasil dari 7²?", choices: ["49", "42", "56", "63"], answer: 0, diff: "normal"},
+      {question: "Rumus luas segitiga?", choices: ["alas x tinggi", "alas x tinggi / 2", "panjang x lebar", "diameter x π"], answer: 1, diff: "normal"},
+      {question: "Berapakah hasil dari 144 : 12?", choices: ["12", "13", "14", "15"], answer: 0, diff: "normal"},
+      {question: "Akar pangkat dua dari 100 adalah?", choices: ["10", "11", "12", "13"], answer: 0, diff: "normal"},
+      {question: "Sisi terpanjang pada segitiga siku-siku disebut ...", choices: ["Alas", "Tinggi", "Hipotenusa", "Sisi"], answer: 2, diff: "normal"},
+      {question: "Satuan berat adalah?", choices: ["Meter", "Liter", "Kilogram", "Detik"], answer: 2, diff: "normal"},
+      {question: "Berapakah keliling persegi dengan sisi 15 cm?", choices: ["60 cm", "45 cm", "30 cm", "75 cm"], answer: 0, diff: "normal"},
+      {question: "Berapakah hasil dari 8 x (5 + 3)?", choices: ["64", "56", "72", "80"], answer: 1, diff: "normal"},
+      {question: "Berapa hasil dari 9 x 11?", choices: ["88", "99", "100", "90"], answer: 1, diff: "normal"},
+      {question: "Berapa hasil dari 50 : 5?", choices: ["10", "11", "12", "9"], answer: 0, diff: "normal"},
+      {question: "Bilangan prima terbesar di bawah 20?", choices: ["17", "19", "13", "15"], answer: 1, diff: "normal"},
+      {question: "Berapakah hasil dari 2³?", choices: ["6", "8", "9", "4"], answer: 1, diff: "normal"},
+      {question: "Berapakah hasil dari 7 x (3 + 2)?", choices: ["35", "42", "21", "49"], answer: 0, diff: "normal"},
+      {question: "Berapa hasil dari 8 x 12?", choices: ["96", "88", "100", "112"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Berapakah hasil dari 13 x 13?", choices: ["169", "156", "143", "130"], answer: 0, diff: "hard"},
+      {question: "Berapakah volume tabung dengan diameter 10cm dan tinggi 20cm (π=3.14)?", choices: ["1570 cm³", "3140 cm³", "1570 cm²", "6280 cm³"], answer: 1, diff: "hard"},
+      {question: "Sebuah kubus memiliki volume 216 cm³. Berapa panjang sisinya?", choices: ["6 cm", "8 cm", "9 cm", "12 cm"], answer: 0, diff: "hard"},
+      {question: "Berapakah hasil dari 64 : 8 + 7 x 3?", choices: ["29", "31", "34", "27"], answer: 1, diff: "hard"},
+      {question: "Berapa hasil dari 5 x 5 x 5?", choices: ["125", "75", "25", "100"], answer: 0, diff: "hard"},
+      {question: "Berapakah luas permukaan kubus dengan sisi 10 cm?", choices: ["600 cm²", "400 cm²", "100 cm²", "1000 cm²"], answer: 0, diff: "hard"},
+      {question: "Rumus keliling lingkaran adalah?", choices: ["πd", "2πr", "πr²", "r x d"], answer: 1, diff: "hard"},
+      {question: "Berapa hasil dari 27 : 3 x 2?", choices: ["18", "9", "6", "12"], answer: 0, diff: "hard"},
+      {question: "Berapa hasil dari 15 x (2 + 6)?", choices: ["120", "90", "105", "140"], answer: 1, diff: "hard"},
+      {question: "Berapa hasil dari 25²?", choices: ["625", "525", "225", "425"], answer: 0, diff: "hard"}
+    ],
+    6: [
+      // EASY
+      {question: "Hasil dari 36 : 6 adalah?", choices: ["5", "6", "7", "8"], answer: 1, diff: "easy"},
+      {question: "Akar pangkat dua dari 64?", choices: ["6", "7", "8", "9"], answer: 2, diff: "easy"},
+      {question: "Bilangan ganjil terkecil?", choices: ["1", "2", "3", "4"], answer: 0, diff: "easy"},
+      {question: "Rumus volume balok?", choices: ["p x l x t", "p + l + t", "p x l", "l x t"], answer: 0, diff: "easy"},
+      {question: "Luas segitiga dengan alas 10, tinggi 6?", choices: ["30", "36", "60", "16"], answer: 0, diff: "easy"},
+      {question: "Keliling lingkaran dengan diameter 14 cm adalah?", choices: ["44 cm", "22 cm", "28 cm", "32 cm"], answer: 0, diff: "easy"},
+      {question: "Volume tabung dengan diameter 14cm dan tinggi 10cm (π=22/7)?", choices: ["1540 cm³", "770 cm³", "980 cm³", "220 cm³"], answer: 0, diff: "easy"},
+      {question: "Jika keliling persegi adalah 40 cm, berapa panjang sisi?", choices: ["10 cm", "8 cm", "12 cm", "16 cm"], answer: 0, diff: "easy"},
+      {question: "Berapa jumlah sisi pada kubus?", choices: ["4", "6", "8", "12"], answer: 1, diff: "easy"},
+      {question: "Hasil dari 3³ adalah?", choices: ["6", "9", "27", "18"], answer: 2, diff: "easy"},
+      // NORMAL
+      {question: "Berapa luas permukaan bola dengan jari-jari 7 cm? (π=22/7)", choices: ["616 cm²", "308 cm²", "154 cm²", "77 cm²"], answer: 0, diff: "normal"},
+      {question: "Berapa hasil dari 120 : 8?", choices: ["12", "14", "15", "16"], answer: 2, diff: "normal"},
+      {question: "Berapakah hasil dari 5² + 4²?", choices: ["41", "45", "49", "52"], answer: 0, diff: "normal"},
+      {question: "Berapa hasil dari 2 x (8 + 6)?", choices: ["28", "24", "30", "22"], answer: 1, diff: "normal"},
+      {question: "Hasil dari 15 x 6 adalah?", choices: ["90", "80", "96", "92"], answer: 0, diff: "normal"},
+      {question: "Berapakah akar dari 225?", choices: ["15", "16", "18", "20"], answer: 0, diff: "normal"},
+      {question: "Berapakah hasil dari 12 x 12?", choices: ["144", "122", "132", "124"], answer: 0, diff: "normal"},
+      {question: "Berapa hasil dari 50 : 2?", choices: ["25", "26", "24", "28"], answer: 0, diff: "normal"},
+      {question: "Berapakah luas lingkaran dengan jari-jari 7 cm (π=22/7)?", choices: ["154 cm²", "44 cm²", "77 cm²", "49 cm²"], answer: 0, diff: "normal"},
+      {question: "Berapa hasil dari 16 x 5?", choices: ["80", "85", "70", "75"], answer: 0, diff: "normal"},
+      {question: "Hasil dari 9² adalah?", choices: ["81", "72", "99", "90"], answer: 0, diff: "normal"},
+      {question: "Berapakah keliling persegi panjang dengan p=9, l=5?", choices: ["28", "36", "32", "30"], answer: 0, diff: "normal"},
+      {question: "Berapa hasil dari 100 : 4?", choices: ["25", "20", "24", "30"], answer: 0, diff: "normal"},
+      {question: "Hasil dari 15 + 45 adalah?", choices: ["60", "50", "70", "80"], answer: 0, diff: "normal"},
+      {question: "Hasil dari 32 x 2 adalah?", choices: ["64", "62", "66", "68"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Hasil dari 17² adalah?", choices: ["289", "279", "289", "297"], answer: 0, diff: "hard"},
+      {question: "Berapakah volume bola dengan jari-jari 7 cm? (π=22/7)", choices: ["1437 cm³", "1540 cm³", "308 cm³", "616 cm³"], answer: 0, diff: "hard"},
+      {question: "Berapa hasil dari 8³?", choices: ["512", "256", "128", "64"], answer: 0, diff: "hard"},
+      {question: "Berapakah hasil dari 15 x 15?", choices: ["225", "215", "235", "250"], answer: 0, diff: "hard"},
+      {question: "Berapa hasil dari 144 : 12 + 6 x 3?", choices: ["30", "33", "36", "39"], answer: 1, diff: "hard"},
+      {question: "Berapa hasil dari 18 x 7?", choices: ["126", "128", "124", "120"], answer: 0, diff: "hard"},
+      {question: "Berapakah volume balok dengan p=12, l=6, t=4?", choices: ["288", "2880", "28800", "2888"], answer: 0, diff: "hard"},
+      {question: "Berapa hasil dari 21²?", choices: ["441", "421", "431", "411"], answer: 0, diff: "hard"},
+      {question: "Berapakah sisi kubus dengan volume 512 cm³?", choices: ["8 cm", "9 cm", "10 cm", "11 cm"], answer: 0, diff: "hard"},
+      {question: "Hasil dari 20 x 20 adalah?", choices: ["400", "420", "440", "450"], answer: 0, diff: "hard"}
+    ]
+  } },
+  umum: {
+    4: [
+      // EASY
+      {question: "Presiden pertama Republik Indonesia adalah?", choices: ["Soekarno", "Soeharto", "Habibie", "Gus Dur"], answer: 0, diff: "easy"},
+      {question: "Ibu kota Indonesia adalah?", choices: ["Surabaya", "Jakarta", "Bandung", "Medan"], answer: 1, diff: "easy"},
+      {question: "Hari Kemerdekaan Indonesia diperingati setiap tanggal?", choices: ["1 Juni", "17 Agustus", "20 Mei", "10 November"], answer: 1, diff: "easy"},
+      {question: "Burung nasional Indonesia adalah?", choices: ["Elang Jawa", "Cendrawasih", "Garuda", "Kakatua"], answer: 2, diff: "easy"},
+      {question: "Pancasila memiliki berapa sila?", choices: ["3", "4", "5", "6"], answer: 2, diff: "easy"},
+      {question: "Bendera Indonesia berwarna?", choices: ["Merah Putih", "Merah Kuning", "Putih Biru", "Merah Hitam"], answer: 0, diff: "easy"},
+      {question: "Agama terbanyak di Indonesia adalah?", choices: ["Islam", "Kristen", "Hindu", "Budha"], answer: 0, diff: "easy"},
+      {question: "Pulau terbesar di Indonesia adalah?", choices: ["Sumatra", "Jawa", "Kalimantan", "Sulawesi"], answer: 2, diff: "easy"},
+      {question: "Bahasa resmi Indonesia adalah?", choices: ["Jawa", "Sunda", "Indonesia", "Batak"], answer: 2, diff: "easy"},
+      {question: "Lambang negara Indonesia adalah?", choices: ["Monas", "Garuda", "Cendrawasih", "Elang"], answer: 1, diff: "easy"},
+      // NORMAL
+      {question: "Gunung tertinggi di Indonesia adalah?", choices: ["Semeru", "Rinjani", "Kerinci", "Jaya Wijaya"], answer: 3, diff: "normal"},
+      {question: "Sungai terpanjang di Indonesia adalah?", choices: ["Kapuas", "Mahakam", "Brantas", "Asahan"], answer: 0, diff: "normal"},
+      {question: "Provinsi paling barat Indonesia adalah?", choices: ["Aceh", "Sumatra Utara", "Lampung", "Banten"], answer: 0, diff: "normal"},
+      {question: "Negara tetangga terdekat Indonesia di utara adalah?", choices: ["Malaysia", "Singapura", "Papua Nugini", "Timor Leste"], answer: 0, diff: "normal"},
+      {question: "Nama kapal legendaris Indonesia adalah?", choices: ["Titanic", "Pinisi", "Victoria", "Santa Maria"], answer: 1, diff: "normal"},
+      {question: "Danau terbesar di Indonesia adalah?", choices: ["Danau Toba", "Danau Maninjau", "Danau Singkarak", "Danau Sentarum"], answer: 0, diff: "normal"},
+      {question: "Nama candi terbesar di Indonesia adalah?", choices: ["Borobudur", "Prambanan", "Sewu", "Penataran"], answer: 0, diff: "normal"},
+      {question: "Hari Sumpah Pemuda diperingati setiap tanggal?", choices: ["28 Oktober", "28 Agustus", "28 September", "28 November"], answer: 0, diff: "normal"},
+      {question: "Pahlawan wanita Indonesia adalah?", choices: ["RA Kartini", "Cut Nyak Dien", "Martha Christina Tiahahu", "Semua benar"], answer: 3, diff: "normal"},
+      {question: "Nama alat musik tradisional Jawa Barat adalah?", choices: ["Angklung", "Gamelan", "Kolintang", "Sasando"], answer: 0, diff: "normal"},
+      {question: "Mata uang Indonesia adalah?", choices: ["Rupiah", "Ringgit", "Dollar", "Yen"], answer: 0, diff: "normal"},
+      {question: "Provinsi termuda di Indonesia adalah?", choices: ["Kalimantan Utara", "Papua Barat", "Bangka Belitung", "Gorontalo"], answer: 0, diff: "normal"},
+      {question: "Nama penemu radio adalah?", choices: ["Thomas Edison", "Alexander Graham Bell", "Guglielmo Marconi", "Nikola Tesla"], answer: 2, diff: "normal"},
+      {question: "Bentuk pemerintahan Indonesia adalah?", choices: ["Monarki", "Republik", "Kerajaan", "Federasi"], answer: 1, diff: "normal"},
+      {question: "Bahan baku utama batik adalah?", choices: ["Kain", "Kertas", "Plastik", "Kulit"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Pulau Komodo termasuk provinsi?", choices: ["Nusa Tenggara Timur", "Nusa Tenggara Barat", "Bali", "Sulawesi Selatan"], answer: 0, diff: "hard"},
+      {question: "Siapakah penulis lagu Indonesia Raya?", choices: ["Wage Rudolf Supratman", "Ismail Marzuki", "Cornel Simanjuntak", "Ibu Sud"], answer: 0, diff: "hard"},
+      {question: "Suku bangsa terbesar di Indonesia adalah?", choices: ["Jawa", "Sunda", "Batak", "Minang"], answer: 0, diff: "hard"},
+      {question: "Candi Prambanan terletak di provinsi?", choices: ["Jawa Tengah", "Yogyakarta", "Jawa Timur", "Bali"], answer: 1, diff: "hard"},
+      {question: "Berapakah jumlah provinsi di Indonesia (per 2024)?", choices: ["34", "33", "35", "36"], answer: 0, diff: "hard"},
+      {question: "Nama presiden ke-3 Indonesia adalah?", choices: ["Habibie", "Megawati", "Gus Dur", "Soeharto"], answer: 0, diff: "hard"},
+      {question: "Suku asli Kalimantan adalah?", choices: ["Dayak", "Bugis", "Betawi", "Minang"], answer: 0, diff: "hard"},
+      {question: "Pulau terluas kedua di Indonesia adalah?", choices: ["Sumatra", "Jawa", "Sulawesi", "Papua"], answer: 3, diff: "hard"},
+      {question: "Siapakah pahlawan nasional dari Sulawesi Selatan?", choices: ["Sultan Hasanuddin", "Tuanku Imam Bonjol", "Diponegoro", "Pattimura"], answer: 0, diff: "hard"},
+      {question: "Hewan endemik Papua yang terkenal?", choices: ["Cendrawasih", "Orang Utan", "Komodo", "Badak Jawa"], answer: 0, diff: "hard"}
+    ],
+    5: [
+      // EASY
+      {question: "Nama wakil presiden pertama Indonesia?", choices: ["Mohammad Hatta", "Soeharto", "B.J. Habibie", "Megawati"], answer: 0, diff: "easy"},
+      {question: "Lambang kemakmuran pada Pancasila adalah?", choices: ["Bintang", "Pohon Beringin", "Rantai", "Padi dan Kapas"], answer: 3, diff: "easy"},
+      {question: "Jumlah pulau di Indonesia lebih dari?", choices: ["7.000", "13.000", "17.000", "20.000"], answer: 2, diff: "easy"},
+      {question: "Bahasa Indonesia berasal dari?", choices: ["Bahasa Melayu", "Bahasa Jawa", "Bahasa Sunda", "Bahasa Batak"], answer: 0, diff: "easy"},
+      {question: "Siapakah pahlawan wanita dari Jepara?", choices: ["RA Kartini", "Cut Nyak Dien", "Martha Christina Tiahahu", "Dewi Sartika"], answer: 0, diff: "easy"},
+      {question: "Induk organisasi sepak bola Indonesia adalah?", choices: ["PSSI", "PBSI", "FIFA", "FIBA"], answer: 0, diff: "easy"},
+      {question: "Hari Pahlawan diperingati setiap tanggal?", choices: ["10 November", "17 Agustus", "1 Juni", "28 Oktober"], answer: 0, diff: "easy"},
+      {question: "Sungai utama di Kalimantan adalah?", choices: ["Kapuas", "Brantas", "Musirawas", "Bengawan Solo"], answer: 0, diff: "easy"},
+      {question: "Gunung berapi tertinggi di Jawa adalah?", choices: ["Semeru", "Merapi", "Bromo", "Salak"], answer: 0, diff: "easy"},
+      {question: "Benda berharga peninggalan sejarah disebut?", choices: ["Artefak", "Fosil", "Monumen", "Museum"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Siapa pencipta lagu 'Ibu Kita Kartini'?", choices: ["WR Supratman", "Kusbini", "Ibu Sud", "Ismail Marzuki"], answer: 2, diff: "normal"},
+      {question: "Berapakah warna pada bendera Indonesia?", choices: ["Satu", "Dua", "Tiga", "Empat"], answer: 1, diff: "normal"},
+      {question: "Provinsi di ujung timur Indonesia adalah?", choices: ["Papua", "Maluku", "NTT", "Sulawesi Utara"], answer: 0, diff: "normal"},
+      {question: "Hari Pendidikan Nasional diperingati tanggal?", choices: ["2 Mei", "21 April", "28 Oktober", "10 November"], answer: 0, diff: "normal"},
+      {question: "Siapakah pahlawan nasional dari Aceh?", choices: ["Cut Nyak Dien", "RA Kartini", "Dewi Sartika", "Martha Christina"], answer: 0, diff: "normal"},
+      {question: "Tari kecak berasal dari?", choices: ["Bali", "Sumatra", "Jawa", "Sulawesi"], answer: 0, diff: "normal"},
+      {question: "Nama ibu kota Jawa Tengah adalah?", choices: ["Semarang", "Solo", "Magelang", "Purwokerto"], answer: 0, diff: "normal"},
+      {question: "Rumah adat Minangkabau disebut?", choices: ["Gadang", "Joglo", "Toraja", "Limas"], answer: 0, diff: "normal"},
+      {question: "Nama bandara internasional di Jakarta?", choices: ["Soekarno-Hatta", "Ngurah Rai", "Kualanamu", "Adisutjipto"], answer: 0, diff: "normal"},
+      {question: "Bentuk dasar pemerintahan Indonesia?", choices: ["Republik", "Kerajaan", "Monarki", "Demokrasi"], answer: 0, diff: "normal"},
+      {question: "Nama penemu lampu pijar?", choices: ["Thomas Edison", "Einstein", "Newton", "Faraday"], answer: 0, diff: "normal"},
+      {question: "Suku bangsa di Papua adalah?", choices: ["Dani", "Asmat", "Mandar", "Bugis"], answer: 1, diff: "normal"},
+      {question: "Hari Kartini diperingati setiap tanggal?", choices: ["21 April", "17 Agustus", "2 Mei", "10 November"], answer: 0, diff: "normal"},
+      {question: "Makanan khas Yogyakarta adalah?", choices: ["Gudeg", "Rendang", "Soto", "Pempek"], answer: 0, diff: "normal"},
+      {question: "Nama laut yang memisahkan Sumatera dan Jawa?", choices: ["Selat Sunda", "Selat Malaka", "Laut Jawa", "Laut Banda"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Universitas tertua di Indonesia adalah?", choices: ["UGM", "UI", "ITB", "IPB"], answer: 1, diff: "hard"},
+      {question: "Pulau yang dikenal sebagai 'Pulau Dewata' adalah?", choices: ["Bali", "Sumatra", "Sulawesi", "Lombok"], answer: 0, diff: "hard"},
+      {question: "Siapakah Raja Majapahit yang terkenal?", choices: ["Hayam Wuruk", "Gajah Mada", "Airlangga", "Kertanegara"], answer: 0, diff: "hard"},
+      {question: "Nama perdana menteri pertama Indonesia?", choices: ["Sutan Sjahrir", "Mohammad Hatta", "Ali Sastroamidjojo", "Soekarno"], answer: 0, diff: "hard"},
+      {question: "Tokoh proklamator Indonesia selain Soekarno adalah?", choices: ["Mohammad Hatta", "Soeharto", "BJ Habibie", "Gus Dur"], answer: 0, diff: "hard"},
+      {question: "Hewan khas Kalimantan yang dilindungi adalah?", choices: ["Orangutan", "Komodo", "Cendrawasih", "Badak Jawa"], answer: 0, diff: "hard"},
+      {question: "Nama bandara internasional di Bali?", choices: ["Ngurah Rai", "Soekarno-Hatta", "Adisutjipto", "Kualanamu"], answer: 0, diff: "hard"},
+      {question: "Suku asli Sulawesi Selatan adalah?", choices: ["Bugis", "Dayak", "Betawi", "Minang"], answer: 0, diff: "hard"},
+      {question: "Pahlawan wanita dari Maluku?", choices: ["Martha Christina Tiahahu", "RA Kartini", "Cut Nyak Dien", "Dewi Sartika"], answer: 0, diff: "hard"},
+      {question: "Danau terbesar di Kalimantan adalah?", choices: ["Danau Sentarum", "Danau Toba", "Danau Maninjau", "Danau Singkarak"], answer: 0, diff: "hard"}
+    ],
+    6: [
+      // EASY
+      {question: "Bapak Proklamator Indonesia adalah?", choices: ["Soekarno & Hatta", "Soeharto & Habibie", "Megawati & Gus Dur", "Jokowi & Ma'ruf"], answer: 0, diff: "easy"},
+      {question: "Pahlawan wanita dari Aceh adalah?", choices: ["Cut Nyak Dien", "RA Kartini", "Dewi Sartika", "Martha Christina"], answer: 0, diff: "easy"},
+      {question: "Lagu kebangsaan Indonesia adalah?", choices: ["Indonesia Raya", "Rayuan Pulau Kelapa", "Tanah Airku", "Bagimu Negeri"], answer: 0, diff: "easy"},
+      {question: "Pulau terkecil di Indonesia adalah?", choices: ["Pulau Senua", "Pulau Komodo", "Pulau Jawa", "Pulau Sumatra"], answer: 0, diff: "easy"},
+      {question: "Berapakah jumlah sila dalam Pancasila?", choices: ["4", "5", "6", "7"], answer: 1, diff: "easy"},
+      {question: "Monumen Nasional terletak di kota?", choices: ["Jakarta", "Bandung", "Surabaya", "Medan"], answer: 0, diff: "easy"},
+      {question: "Hari Kesaktian Pancasila diperingati setiap tanggal?", choices: ["1 Oktober", "1 Juni", "17 Agustus", "28 Oktober"], answer: 0, diff: "easy"},
+      {question: "Nama candi Hindu terbesar di Indonesia adalah?", choices: ["Prambanan", "Borobudur", "Sewu", "Penataran"], answer: 0, diff: "easy"},
+      {question: "Suku bangsa terbesar di Papua adalah?", choices: ["Dani", "Asmat", "Mandar", "Bugis"], answer: 1, diff: "easy"},
+      {question: "Nama gunung tertinggi di Jawa adalah?", choices: ["Semeru", "Merapi", "Bromo", "Salak"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Nama alat musik tradisional Nusa Tenggara Timur adalah?", choices: ["Sasando", "Angklung", "Gamelan", "Kolintang"], answer: 0, diff: "normal"},
+      {question: "Berapakah jumlah pulau di Indonesia?", choices: [">17.000", ">7.000", ">10.000", ">20.000"], answer: 0, diff: "normal"},
+      {question: "Hari Lahir Pancasila diperingati tanggal?", choices: ["1 Juni", "17 Agustus", "28 Oktober", "10 November"], answer: 0, diff: "normal"},
+      {question: "Suku bangsa asli Sumatra Barat adalah?", choices: ["Minang", "Batak", "Aceh", "Mandar"], answer: 0, diff: "normal"},
+      {question: "Tokoh proklamator Indonesia adalah?", choices: ["Soekarno & Hatta", "Soekarno & Soeharto", "Soekarno & Megawati", "Soekarno & Gus Dur"], answer: 0, diff: "normal"},
+      {question: "Pulau terluas di Indonesia adalah?", choices: ["Kalimantan", "Sumatra", "Jawa", "Sulawesi"], answer: 0, diff: "normal"},
+      {question: "Berapakah jumlah provinsi di Indonesia (2024)?", choices: ["34", "33", "35", "36"], answer: 0, diff: "normal"},
+      {question: "Suku bangsa asli Sulawesi Selatan adalah?", choices: ["Bugis", "Dayak", "Betawi", "Minang"], answer: 0, diff: "normal"},
+      {question: "Nama bandara internasional di Medan adalah?", choices: ["Kualanamu", "Soekarno-Hatta", "Ngurah Rai", "Adisutjipto"], answer: 0, diff: "normal"},
+      {question: "Bentuk pemerintah Indonesia adalah?", choices: ["Republik", "Monarki", "Kerajaan", "Federasi"], answer: 0, diff: "normal"},
+      {question: "Nama pahlawan wanita dari Jawa Barat adalah?", choices: ["Dewi Sartika", "RA Kartini", "Martha Christina", "Cut Nyak Dien"], answer: 0, diff: "normal"},
+      {question: "Hari Pahlawan diperingati setiap tanggal?", choices: ["10 November", "17 Agustus", "1 Juni", "28 Oktober"], answer: 0, diff: "normal"},
+      {question: "Pulau yang dikenal sebagai 'Pulau Dewata' adalah?", choices: ["Bali", "Sumatra", "Sulawesi", "Lombok"], answer: 0, diff: "normal"},
+      {question: "Sungai terpanjang di Indonesia adalah?", choices: ["Kapuas", "Mahakam", "Brantas", "Asahan"], answer: 0, diff: "normal"},
+      {question: "Nama alat musik tradisional Sulawesi Utara adalah?", choices: ["Kolintang", "Angklung", "Gamelan", "Sasando"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Tokoh proklamator Indonesia lahir di kota?", choices: ["Blitar & Bukittinggi", "Surabaya & Medan", "Jakarta & Bandung", "Palembang & Manado"], answer: 0, diff: "hard"},
+      {question: "Nama penemu radio adalah?", choices: ["Marconi", "Edison", "Faraday", "Newton"], answer: 0, diff: "hard"},
+      {question: "Candi Borobudur terletak di provinsi?", choices: ["Jawa Tengah", "Yogyakarta", "Jawa Timur", "Bali"], answer: 0, diff: "hard"},
+      {question: "Danau terbesar di Indonesia adalah?", choices: ["Danau Toba", "Danau Maninjau", "Danau Singkarak", "Danau Sentarum"], answer: 0, diff: "hard"},
+      {question: "Nama presiden ke-4 Indonesia adalah?", choices: ["Gus Dur", "Megawati", "Habibie", "Soeharto"], answer: 0, diff: "hard"},
+      {question: "Pulau terluas kedua di Indonesia adalah?", choices: ["Sumatra", "Jawa", "Sulawesi", "Papua"], answer: 3, diff: "hard"},
+      {question: "Nama pahlawan wanita dari Maluku?", choices: ["Martha Christina Tiahahu", "RA Kartini", "Cut Nyak Dien", "Dewi Sartika"], answer: 0, diff: "hard"},
+      {question: "Pulau Komodo termasuk provinsi?", choices: ["Nusa Tenggara Timur", "Nusa Tenggara Barat", "Bali", "Sulawesi Selatan"], answer: 0, diff: "hard"},
+      {question: "Nama bandara internasional di Bali?", choices: ["Ngurah Rai", "Soekarno-Hatta", "Adisutjipto", "Kualanamu"], answer: 0, diff: "hard"},
+      {question: "Hari Sumpah Pemuda diperingati setiap tanggal?", choices: ["28 Oktober", "28 Agustus", "28 September", "28 November"], answer: 0, diff: "hard"}
+    ]
+  },
+  ipa: {
+    4: [
+      // EASY
+      {question: "Bagian tumbuhan yang berfungsi menyerap air dan mineral adalah?", choices: ["Akar", "Batang", "Daun", "Bunga"], answer: 0, diff: "easy"},
+      {question: "Indra penciuman terdapat pada?", choices: ["Telinga", "Mata", "Hidung", "Lidah"], answer: 2, diff: "easy"},
+      {question: "Bagian tumbuhan yang berwarna hijau dan tempat fotosintesis adalah?", choices: ["Batang", "Daun", "Akar", "Bunga"], answer: 1, diff: "easy"},
+      {question: "Sumber energi utama bagi manusia adalah?", choices: ["Karbohidrat", "Vitamin", "Air", "Lemak"], answer: 0, diff: "easy"},
+      {question: "Air berubah menjadi uap disebut proses?", choices: ["Penguapan", "Pembekuan", "Pencairan", "Penyubliman"], answer: 0, diff: "easy"},
+      {question: "Binatang yang berkembang biak dengan cara bertelur disebut?", choices: ["Vivipar", "Ovipar", "Ovovivipar", "Mamalia"], answer: 1, diff: "easy"},
+      {question: "Bagian tubuh yang berfungsi untuk mendengar adalah?", choices: ["Mata", "Telinga", "Hidung", "Lidah"], answer: 1, diff: "easy"},
+      {question: "Alat pernapasan manusia adalah?", choices: ["Jantung", "Paru-paru", "Lambung", "Ginjal"], answer: 1, diff: "easy"},
+      {question: "Cahaya matahari membantu tumbuhan dalam proses?", choices: ["Respirasi", "Fotosintesis", "Transpirasi", "Fermentasi"], answer: 1, diff: "easy"},
+      {question: "Binatang yang hidup di air disebut?", choices: ["Amfibi", "Mamalia", "Ikan", "Reptil"], answer: 2, diff: "easy"},
+      // NORMAL
+      {question: "Bagian sel tumbuhan yang mengandung klorofil adalah?", choices: ["Nukleus", "Mitokondria", "Kloroplas", "Sitoplasma"], answer: 2, diff: "normal"},
+      {question: "Proses perubahan air menjadi es disebut?", choices: ["Penguapan", "Pembekuan", "Penyubliman", "Pencairan"], answer: 1, diff: "normal"},
+      {question: "Organ pernapasan pada ikan adalah?", choices: ["Paru-paru", "Insang", "Kulit", "Trakea"], answer: 1, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi sebagai tempat cadangan makanan?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "normal"},
+      {question: "Sumber energi yang tidak dapat diperbarui adalah?", choices: ["Angin", "Matahari", "Batu bara", "Air"], answer: 2, diff: "normal"},
+      {question: "Alat ukur suhu adalah?", choices: ["Barometer", "Termometer", "Hygrometer", "Anemometer"], answer: 1, diff: "normal"},
+      {question: "Proses pertumbuhan dan perkembangan disebut juga dengan?", choices: ["Respirasi", "Metamorfosis", "Fotosintesis", "Ekskresi"], answer: 1, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi memperkuat posisi tegak tumbuhan adalah?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "normal"},
+      {question: "Organ pengeluaran pada manusia disebut juga dengan?", choices: ["Ekskresi", "Respirasi", "Digestif", "Reproduksi"], answer: 0, diff: "normal"},
+      {question: "Gigi yang digunakan untuk mengunyah makanan adalah?", choices: ["Gigi seri", "Gigi taring", "Gigi geraham", "Gigi gigi susu"], answer: 2, diff: "normal"},
+      {question: "Bagian dari sistem pencernaan manusia?", choices: ["Paru-paru", "Lambung", "Ginjal", "Jantung"], answer: 1, diff: "normal"},
+      {question: "Benda yang dapat menghantarkan listrik disebut?", choices: ["Isolator", "Konduktor", "Plastik", "Karet"], answer: 1, diff: "normal"},
+      {question: "Hewan yang mengalami metamorfosis sempurna adalah?", choices: ["Kupu-kupu", "Ayam", "Kucing", "Domba"], answer: 0, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi menarik perhatian serangga penyerbuk?", choices: ["Akar", "Batang", "Daun", "Bunga"], answer: 3, diff: "normal"},
+      {question: "Zat yang diperlukan tumbuhan untuk fotosintesis?", choices: ["Karbon dioksida", "Nitrogen", "Oksigen", "Helium"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Hewan yang berkembang biak dengan cara bertelur dan melahirkan disebut?", choices: ["Vivipar", "Ovipar", "Ovovivipar", "Mamalia"], answer: 2, diff: "hard"},
+      {question: "Bagian otak yang berfungsi mengatur keseimbangan tubuh adalah?", choices: ["Serebelum", "Serebrum", "Medula", "Hipotalamus"], answer: 0, diff: "hard"},
+      {question: "Sumber energi alternatif yang ramah lingkungan adalah?", choices: ["Batu bara", "Minyak bumi", "Angin", "Gas alam"], answer: 2, diff: "hard"},
+      {question: "Proses penyerapan air oleh akar disebut?", choices: ["Transpirasi", "Absorpsi", "Respirasi", "Fotosintesis"], answer: 1, diff: "hard"},
+      {question: "Bagian darah yang berfungsi membawa oksigen adalah?", choices: ["Leukosit", "Trombosit", "Eritrosit", "Plasma"], answer: 2, diff: "hard"},
+      {question: "Bagian tumbuhan tempat terjadinya respirasi adalah?", choices: ["Daun", "Batang", "Akar", "Stomata"], answer: 3, diff: "hard"},
+      {question: "Hewan yang mengalami metamorfosis tidak sempurna adalah?", choices: ["Belalang", "Kupu-kupu", "Katak", "Nyamuk"], answer: 0, diff: "hard"},
+      {question: "Bagian sel manusia yang berfungsi sebagai pusat pengendali adalah?", choices: ["Nukleus", "Mitokondria", "Sitoplasma", "Kloroplas"], answer: 0, diff: "hard"},
+      {question: "Cacing tanah berkembang biak dengan cara?", choices: ["Bertelur", "Melahirkan", "Membelah diri", "Berkembang biak secara vegetatif"], answer: 0, diff: "hard"},
+      {question: "Bagian dari sistem ekskresi pada manusia adalah?", choices: ["Lambung", "Ginjal", "Paru-paru", "Usus"], answer: 1, diff: "hard"}
+    ],
+    5: [
+      // EASY
+      {question: "Hewan pemakan tumbuhan disebut?", choices: ["Herbivora", "Karnivora", "Omnivora", "Insektivora"], answer: 0, diff: "easy"},
+      {question: "Hewan pemakan daging disebut?", choices: ["Herbivora", "Karnivora", "Omnivora", "Insektivora"], answer: 1, diff: "easy"},
+      {question: "Alat indra untuk melihat adalah?", choices: ["Mata", "Hidung", "Telinga", "Lidah"], answer: 0, diff: "easy"},
+      {question: "Bagian tumbuhan yang berfungsi sebagai tempat fotosintesis?", choices: ["Daun", "Akar", "Batang", "Bunga"], answer: 0, diff: "easy"},
+      {question: "Ikan bernapas menggunakan?", choices: ["Paru-paru", "Insang", "Kulit", "Trakea"], answer: 1, diff: "easy"},
+      {question: "Proses penguapan air dari tumbuhan disebut?", choices: ["Transpirasi", "Respirasi", "Fotosintesis", "Fermentasi"], answer: 0, diff: "easy"},
+      {question: "Hewan yang berkembang biak dengan cara melahirkan disebut?", choices: ["Ovipar", "Vivipar", "Ovovivipar", "Mamalia"], answer: 1, diff: "easy"},
+      {question: "Bagian tumbuhan yang menarik serangga penyerbuk?", choices: ["Akar", "Batang", "Daun", "Bunga"], answer: 3, diff: "easy"},
+      {question: "Bagian tubuh yang berfungsi mengedarkan darah adalah?", choices: ["Paru-paru", "Jantung", "Lambung", "Ginjal"], answer: 1, diff: "easy"},
+      {question: "Organ pernapasan manusia adalah?", choices: ["Ginjal", "Paru-paru", "Lambung", "Hati"], answer: 1, diff: "easy"},
+      // NORMAL
+      {question: "Proses perubahan air menjadi uap disebut?", choices: ["Penguapan", "Pembekuan", "Pencairan", "Penyubliman"], answer: 0, diff: "normal"},
+      {question: "Bagian sel yang mengandung DNA adalah?", choices: ["Nukleus", "Mitokondria", "Kloroplas", "Sitoplasma"], answer: 0, diff: "normal"},
+      {question: "Organ pernapasan pada serangga adalah?", choices: ["Insang", "Trakea", "Paru-paru", "Kulit"], answer: 1, diff: "normal"},
+      {question: "Sumber energi terbesar di bumi adalah?", choices: ["Matahari", "Angin", "Air", "Batu bara"], answer: 0, diff: "normal"},
+      {question: "Zat makanan yang diperlukan tubuh untuk energi adalah?", choices: ["Karbohidrat", "Vitamin", "Air", "Lemak"], answer: 0, diff: "normal"},
+      {question: "Bagian dari sistem pencernaan manusia adalah?", choices: ["Paru-paru", "Lambung", "Ginjal", "Jantung"], answer: 1, diff: "normal"},
+      {question: "Hewan yang mengalami metamorfosis sempurna adalah?", choices: ["Kupu-kupu", "Belalang", "Ayam", "Kucing"], answer: 0, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi menyerap air adalah?", choices: ["Akar", "Batang", "Daun", "Bunga"], answer: 0, diff: "normal"},
+      {question: "Bagian tumbuhan yang menyimpan cadangan makanan?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "normal"},
+      {question: "Hewan yang mengalami metamorfosis tidak sempurna adalah?", choices: ["Belalang", "Kupu-kupu", "Katak", "Nyamuk"], answer: 0, diff: "normal"},
+      {question: "Organ pengeluaran pada manusia disebut juga dengan?", choices: ["Ekskresi", "Respirasi", "Digestif", "Reproduksi"], answer: 0, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi memperkuat posisi tegak tumbuhan adalah?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "normal"},
+      {question: "Alat ukur suhu adalah?", choices: ["Barometer", "Termometer", "Hygrometer", "Anemometer"], answer: 1, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi menarik perhatian serangga penyerbuk?", choices: ["Akar", "Batang", "Daun", "Bunga"], answer: 3, diff: "normal"},
+      {question: "Zat yang diperlukan tumbuhan untuk fotosintesis?", choices: ["Karbon dioksida", "Nitrogen", "Oksigen", "Helium"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Bagian otak yang berfungsi mengatur keseimbangan tubuh adalah?", choices: ["Serebelum", "Serebrum", "Medula", "Hipotalamus"], answer: 0, diff: "hard"},
+      {question: "Sumber energi alternatif yang ramah lingkungan adalah?", choices: ["Batu bara", "Minyak bumi", "Angin", "Gas alam"], answer: 2, diff: "hard"},
+      {question: "Proses penyerapan air oleh akar disebut?", choices: ["Transpirasi", "Absorpsi", "Respirasi", "Fotosintesis"], answer: 1, diff: "hard"},
+      {question: "Bagian darah yang berfungsi membawa oksigen adalah?", choices: ["Leukosit", "Trombosit", "Eritrosit", "Plasma"], answer: 2, diff: "hard"},
+      {question: "Bagian tumbuhan tempat terjadinya respirasi adalah?", choices: ["Daun", "Batang", "Akar", "Stomata"], answer: 3, diff: "hard"},
+      {question: "Bagian sel manusia yang berfungsi sebagai pusat pengendali adalah?", choices: ["Nukleus", "Mitokondria", "Sitoplasma", "Kloroplas"], answer: 0, diff: "hard"},
+      {question: "Cacing tanah berkembang biak dengan cara?", choices: ["Bertelur", "Melahirkan", "Membelah diri", "Berkembang biak secara vegetatif"], answer: 0, diff: "hard"},
+      {question: "Bagian dari sistem ekskresi pada manusia adalah?", choices: ["Lambung", "Ginjal", "Paru-paru", "Usus"], answer: 1, diff: "hard"},
+      {question: "Hewan yang berkembang biak dengan cara bertelur dan melahirkan disebut?", choices: ["Vivipar", "Ovipar", "Ovovivipar", "Mamalia"], answer: 2, diff: "hard"},
+      {question: "Bagian tumbuhan yang menyimpan cadangan makanan adalah?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "hard"}
+    ],
+    6: [
+      // EASY
+      {question: "Bagian tubuh yang berfungsi untuk melihat adalah?", choices: ["Mata", "Telinga", "Hidung", "Lidah"], answer: 0, diff: "easy"},
+      {question: "Alat pernapasan pada manusia adalah?", choices: ["Paru-paru", "Lambung", "Ginjal", "Jantung"], answer: 0, diff: "easy"},
+      {question: "Bagian tumbuhan yang berwarna hijau dan tempat fotosintesis adalah?", choices: ["Batang", "Daun", "Akar", "Bunga"], answer: 1, diff: "easy"},
+      {question: "Organ pernapasan pada ikan adalah?", choices: ["Paru-paru", "Insang", "Kulit", "Trakea"], answer: 1, diff: "easy"},
+      {question: "Sumber energi utama bagi manusia adalah?", choices: ["Karbohidrat", "Vitamin", "Air", "Lemak"], answer: 0, diff: "easy"},
+      {question: "Organ pengeluaran pada manusia disebut juga dengan?", choices: ["Ekskresi", "Respirasi", "Digestif", "Reproduksi"], answer: 0, diff: "easy"},
+      {question: "Gigi yang digunakan untuk mengunyah makanan adalah?", choices: ["Gigi seri", "Gigi taring", "Gigi geraham", "Gigi susu"], answer: 2, diff: "easy"},
+      {question: "Bagian dari sistem pencernaan manusia?", choices: ["Paru-paru", "Lambung", "Ginjal", "Jantung"], answer: 1, diff: "easy"},
+      {question: "Benda yang dapat menghantarkan listrik disebut?", choices: ["Isolator", "Konduktor", "Plastik", "Karet"], answer: 1, diff: "easy"},
+      {question: "Hewan yang mengalami metamorfosis sempurna adalah?", choices: ["Kupu-kupu", "Ayam", "Kucing", "Domba"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Bagian sel tumbuhan yang mengandung klorofil adalah?", choices: ["Nukleus", "Mitokondria", "Kloroplas", "Sitoplasma"], answer: 2, diff: "normal"},
+      {question: "Proses perubahan air menjadi es disebut?", choices: ["Penguapan", "Pembekuan", "Penyubliman", "Pencairan"], answer: 1, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi sebagai tempat cadangan makanan?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "normal"},
+      {question: "Sumber energi yang tidak dapat diperbarui adalah?", choices: ["Angin", "Matahari", "Batu bara", "Air"], answer: 2, diff: "normal"},
+      {question: "Alat ukur suhu adalah?", choices: ["Barometer", "Termometer", "Hygrometer", "Anemometer"], answer: 1, diff: "normal"},
+      {question: "Proses pertumbuhan dan perkembangan disebut juga dengan?", choices: ["Respirasi", "Metamorfosis", "Fotosintesis", "Ekskresi"], answer: 1, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi memperkuat posisi tegak tumbuhan adalah?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "normal"},
+      {question: "Hewan yang mengalami metamorfosis tidak sempurna adalah?", choices: ["Belalang", "Kupu-kupu", "Katak", "Nyamuk"], answer: 0, diff: "normal"},
+      {question: "Bagian tumbuhan yang berfungsi menarik perhatian serangga penyerbuk?", choices: ["Akar", "Batang", "Daun", "Bunga"], answer: 3, diff: "normal"},
+      {question: "Zat yang diperlukan tumbuhan untuk fotosintesis?", choices: ["Karbon dioksida", "Nitrogen", "Oksigen", "Helium"], answer: 0, diff: "normal"},
+      {question: "Bagian darah yang berfungsi membawa oksigen adalah?", choices: ["Leukosit", "Trombosit", "Eritrosit", "Plasma"], answer: 2, diff: "normal"},
+      {question: "Bagian tumbuhan tempat terjadinya respirasi adalah?", choices: ["Daun", "Batang", "Akar", "Stomata"], answer: 3, diff: "normal"},
+      {question: "Bagian sel manusia yang berfungsi sebagai pusat pengendali adalah?", choices: ["Nukleus", "Mitokondria", "Sitoplasma", "Kloroplas"], answer: 0, diff: "normal"},
+      {question: "Cacing tanah berkembang biak dengan cara?", choices: ["Bertelur", "Melahirkan", "Membelah diri", "Berkembang biak secara vegetatif"], answer: 0, diff: "normal"},
+      {question: "Bagian dari sistem ekskresi pada manusia adalah?", choices: ["Lambung", "Ginjal", "Paru-paru", "Usus"], answer: 1, diff: "normal"},
+      // HARD
+      {question: "Bagian otak yang berfungsi mengatur keseimbangan tubuh adalah?", choices: ["Serebelum", "Serebrum", "Medula", "Hipotalamus"], answer: 0, diff: "hard"},
+      {question: "Sumber energi alternatif yang ramah lingkungan adalah?", choices: ["Batu bara", "Minyak bumi", "Angin", "Gas alam"], answer: 2, diff: "hard"},
+      {question: "Proses penyerapan air oleh akar disebut?", choices: ["Transpirasi", "Absorpsi", "Respirasi", "Fotosintesis"], answer: 1, diff: "hard"},
+      {question: "Bagian tumbuhan tempat terjadinya respirasi adalah?", choices: ["Daun", "Batang", "Akar", "Stomata"], answer: 3, diff: "hard"},
+      {question: "Hewan yang berkembang biak dengan cara bertelur dan melahirkan disebut?", choices: ["Vivipar", "Ovipar", "Ovovivipar", "Mamalia"], answer: 2, diff: "hard"},
+      {question: "Bagian tumbuhan yang menyimpan cadangan makanan adalah?", choices: ["Daun", "Batang", "Akar", "Bunga"], answer: 1, diff: "hard"},
+      {question: "Hewan yang berkembang biak dengan cara bertelur disebut?", choices: ["Vivipar", "Ovipar", "Ovovivipar", "Mamalia"], answer: 1, diff: "hard"},
+      {question: "Bagian dari sistem ekskresi pada manusia adalah?", choices: ["Lambung", "Ginjal", "Paru-paru", "Usus"], answer: 1, diff: "hard"},
+      {question: "Bagian sel tumbuhan yang mengandung klorofil adalah?", choices: ["Nukleus", "Mitokondria", "Kloroplas", "Sitoplasma"], answer: 2, diff: "hard"},
+      {question: "Bagian darah yang berfungsi membawa oksigen adalah?", choices: ["Leukosit", "Trombosit", "Eritrosit", "Plasma"], answer: 2, diff: "hard"}
+    ]
+  },
+   ips: {
+    4: [
+      // EASY
+      {question: "Ibu kota Indonesia adalah?", choices: ["Jakarta", "Surabaya", "Medan", "Bandung"], answer: 0, diff: "easy"},
+      {question: "Provinsi paling barat Indonesia adalah?", choices: ["Aceh", "Sumatra Utara", "Banten", "Lampung"], answer: 0, diff: "easy"},
+      {question: "Alat tukar yang digunakan dalam perdagangan adalah?", choices: ["Uang", "Emas", "Beras", "Garam"], answer: 0, diff: "easy"},
+      {question: "Pulau terbesar di Indonesia adalah?", choices: ["Jawa", "Sumatra", "Kalimantan", "Sulawesi"], answer: 2, diff: "easy"},
+      {question: "Pekerjaan utama masyarakat pesisir adalah?", choices: ["Petani", "Nelayan", "Guru", "Dokter"], answer: 1, diff: "easy"},
+      {question: "Hari Kemerdekaan Indonesia diperingati setiap tanggal?", choices: ["17 Agustus", "28 Oktober", "1 Juni", "10 November"], answer: 0, diff: "easy"},
+      {question: "Rumah adat Minangkabau disebut?", choices: ["Gadang", "Joglo", "Toraja", "Limas"], answer: 0, diff: "easy"},
+      {question: "Bentuk pemerintahan Indonesia adalah?", choices: ["Monarki", "Republik", "Federasi", "Kerajaan"], answer: 1, diff: "easy"},
+      {question: "Sungai terpanjang di Indonesia adalah?", choices: ["Kapuas", "Mahakam", "Brantas", "Asahan"], answer: 0, diff: "easy"},
+      {question: "Batas Indonesia di sebelah utara adalah?", choices: ["Malaysia", "Australia", "Papua Nugini", "Timor Leste"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Rumah adat dari Jawa Tengah adalah?", choices: ["Joglo", "Gadang", "Tongkonan", "Limas"], answer: 0, diff: "normal"},
+      {question: "Gunung berapi tertinggi di Indonesia adalah?", choices: ["Kerinci", "Semeru", "Rinjani", "Agung"], answer: 1, diff: "normal"},
+      {question: "Komoditas utama ekspor Indonesia adalah?", choices: ["Minyak bumi", "Kelapa sawit", "Beras", "Jagung"], answer: 1, diff: "normal"},
+      {question: "Suku bangsa terbesar di Indonesia adalah?", choices: ["Jawa", "Sunda", "Batak", "Bugis"], answer: 0, diff: "normal"},
+      {question: "Laut yang memisahkan Sumatra dan Jawa adalah?", choices: ["Selat Sunda", "Selat Malaka", "Laut Jawa", "Laut Banda"], answer: 0, diff: "normal"},
+      {question: "Hari Sumpah Pemuda diperingati setiap tanggal?", choices: ["28 Oktober", "17 Agustus", "1 Juni", "10 November"], answer: 0, diff: "normal"},
+      {question: "Nama bandara internasional di Jakarta adalah?", choices: ["Soekarno-Hatta", "Ngurah Rai", "Kualanamu", "Adisutjipto"], answer: 0, diff: "normal"},
+      {question: "Danau terbesar di Indonesia adalah?", choices: ["Toba", "Sentarum", "Maninjau", "Singkarak"], answer: 0, diff: "normal"},
+      {question: "Nama penemu radio adalah?", choices: ["Marconi", "Einstein", "Newton", "Faraday"], answer: 0, diff: "normal"},
+      {question: "Provinsi termuda di Indonesia adalah?", choices: ["Kalimantan Utara", "Bangka Belitung", "Papua Barat", "Gorontalo"], answer: 0, diff: "normal"},
+      {question: "Letak geografis Indonesia adalah antara dua samudra dan dua ...", choices: ["Benua", "Gunung", "Pulau", "Danau"], answer: 0, diff: "normal"},
+      {question: "Tokoh proklamator Indonesia adalah?", choices: ["Soekarno & Hatta", "Soeharto & Habibie", "Megawati & Gus Dur", "Jokowi & Ma'ruf"], answer: 0, diff: "normal"},
+      {question: "Hari Pahlawan diperingati setiap tanggal?", choices: ["10 November", "17 Agustus", "1 Juni", "28 Oktober"], answer: 0, diff: "normal"},
+      {question: "Lembaga yang mengatur pendidikan di Indonesia adalah?", choices: ["Kemdikbud", "Kemenkes", "Kemenag", "Kemenhub"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Kerajaan Hindu tertua di Indonesia adalah?", choices: ["Kutai", "Majapahit", "Sriwijaya", "Tarumanegara"], answer: 0, diff: "hard"},
+      {question: "Sistem tanam paksa pada masa penjajahan disebut?", choices: ["Cultuurstelsel", "Autarky", "Merkantilisme", "Feodalisme"], answer: 0, diff: "hard"},
+      {question: "Candi Borobudur terletak di provinsi?", choices: ["Jawa Tengah", "Yogyakarta", "Jawa Timur", "Bali"], answer: 0, diff: "hard"},
+      {question: "Suku bangsa asli Kalimantan adalah?", choices: ["Dayak", "Bugis", "Betawi", "Minang"], answer: 0, diff: "hard"},
+      {question: "Nama pahlawan wanita dari Maluku?", choices: ["Martha Christina Tiahahu", "RA Kartini", "Cut Nyak Dien", "Dewi Sartika"], answer: 0, diff: "hard"},
+      {question: "Tokoh proklamator Indonesia lahir di kota?", choices: ["Blitar & Bukittinggi", "Surabaya & Medan", "Jakarta & Bandung", "Palembang & Manado"], answer: 0, diff: "hard"},
+      {question: "Kerajaan Islam pertama di Indonesia adalah?", choices: ["Samudra Pasai", "Demak", "Aceh", "Banten"], answer: 0, diff: "hard"},
+      {question: "Nama penulis lagu Indonesia Raya adalah?", choices: ["Wage Rudolf Supratman", "Ismail Marzuki", "Cornel Simanjuntak", "Ibu Sud"], answer: 0, diff: "hard"},
+      {question: "Sistem pemerintahan kerajaan Majapahit adalah?", choices: ["Monarki", "Republik", "Federasi", "Demokrasi"], answer: 0, diff: "hard"},
+      {question: "Pulau Komodo termasuk provinsi?", choices: ["Nusa Tenggara Timur", "Nusa Tenggara Barat", "Bali", "Sulawesi Selatan"], answer: 0, diff: "hard"}
+    ],
+    5: [
+      // EASY
+      {question: "Nama bandara internasional di Bali adalah?", choices: ["Ngurah Rai", "Soekarno-Hatta", "Adisutjipto", "Kualanamu"], answer: 0, diff: "easy"},
+      {question: "Hari Pendidikan Nasional diperingati tanggal?", choices: ["2 Mei", "21 April", "28 Oktober", "10 November"], answer: 0, diff: "easy"},
+      {question: "Rumah adat dari Jawa Tengah adalah?", choices: ["Joglo", "Gadang", "Tongkonan", "Limas"], answer: 0, diff: "easy"},
+      {question: "Gunung berapi tertinggi di Jawa adalah?", choices: ["Semeru", "Merapi", "Bromo", "Salak"], answer: 0, diff: "easy"},
+      {question: "Batas Indonesia di sebelah selatan adalah?", choices: ["Australia", "Malaysia", "Papua Nugini", "Timor Leste"], answer: 0, diff: "easy"},
+      {question: "Laut yang memisahkan Sumatra dan Jawa adalah?", choices: ["Selat Sunda", "Selat Malaka", "Laut Jawa", "Laut Banda"], answer: 0, diff: "easy"},
+      {question: "Provinsi termuda di Indonesia adalah?", choices: ["Kalimantan Utara", "Papua Barat", "Bangka Belitung", "Gorontalo"], answer: 0, diff: "easy"},
+      {question: "Nama pulau terluas kedua di Indonesia adalah?", choices: ["Sumatra", "Jawa", "Sulawesi", "Papua"], answer: 3, diff: "easy"},
+      {question: "Komoditas utama ekspor Indonesia adalah?", choices: ["Kelapa sawit", "Beras", "Jagung", "Kopi"], answer: 0, diff: "easy"},
+      {question: "Rumah adat Minangkabau disebut?", choices: ["Gadang", "Joglo", "Toraja", "Limas"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Nama penemu radio adalah?", choices: ["Marconi", "Einstein", "Newton", "Faraday"], answer: 0, diff: "normal"},
+      {question: "Suku bangsa terbesar di Indonesia adalah?", choices: ["Jawa", "Sunda", "Batak", "Bugis"], answer: 0, diff: "normal"},
+      {question: "Hari Sumpah Pemuda diperingati setiap tanggal?", choices: ["28 Oktober", "17 Agustus", "1 Juni", "10 November"], answer: 0, diff: "normal"},
+      {question: "Letak geografis Indonesia adalah antara dua samudra dan dua ...", choices: ["Benua", "Gunung", "Pulau", "Danau"], answer: 0, diff: "normal"},
+      {question: "Rumah adat dari Sulawesi Selatan adalah?", choices: ["Tongkonan", "Gadang", "Joglo", "Limas"], answer: 0, diff: "normal"},
+      {question: "Sungai terpanjang di Indonesia adalah?", choices: ["Kapuas", "Mahakam", "Brantas", "Asahan"], answer: 0, diff: "normal"},
+      {question: "Hari Pahlawan diperingati setiap tanggal?", choices: ["10 November", "17 Agustus", "1 Juni", "28 Oktober"], answer: 0, diff: "normal"},
+      {question: "Kerajaan Hindu tertua di Indonesia adalah?", choices: ["Kutai", "Majapahit", "Sriwijaya", "Tarumanegara"], answer: 0, diff: "normal"},
+      {question: "Candi Borobudur terletak di provinsi?", choices: ["Jawa Tengah", "Yogyakarta", "Jawa Timur", "Bali"], answer: 0, diff: "normal"},
+      {question: "Nama pahlawan wanita dari Maluku?", choices: ["Martha Christina Tiahahu", "RA Kartini", "Cut Nyak Dien", "Dewi Sartika"], answer: 0, diff: "normal"},
+      {question: "Kerajaan Islam pertama di Indonesia adalah?", choices: ["Samudra Pasai", "Demak", "Aceh", "Banten"], answer: 0, diff: "normal"},
+      {question: "Nama penulis lagu Indonesia Raya adalah?", choices: ["Wage Rudolf Supratman", "Ismail Marzuki", "Cornel Simanjuntak", "Ibu Sud"], answer: 0, diff: "normal"},
+      {question: "Suku bangsa asli Kalimantan adalah?", choices: ["Dayak", "Bugis", "Betawi", "Minang"], answer: 0, diff: "normal"},
+      {question: "Nama bandara internasional di Medan adalah?", choices: ["Kualanamu", "Soekarno-Hatta", "Ngurah Rai", "Adisutjipto"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Sistem tanam paksa pada masa penjajahan disebut?", choices: ["Cultuurstelsel", "Autarky", "Merkantilisme", "Feodalisme"], answer: 0, diff: "hard"},
+      {question: "Nama penemu listrik adalah?", choices: ["Thomas Edison", "Einstein", "Newton", "Faraday"], answer: 0, diff: "hard"},
+      {question: "Kerajaan Majapahit berpusat di daerah?", choices: ["Trowulan", "Yogyakarta", "Surabaya", "Semarang"], answer: 0, diff: "hard"},
+      {question: "Sistem pemerintahan kerajaan Majapahit adalah?", choices: ["Monarki", "Republik", "Federasi", "Demokrasi"], answer: 0, diff: "hard"},
+      {question: "Pulau Komodo termasuk provinsi?", choices: ["Nusa Tenggara Timur", "Nusa Tenggara Barat", "Bali", "Sulawesi Selatan"], answer: 0, diff: "hard"},
+      {question: "Nama pahlawan wanita dari Aceh?", choices: ["Cut Nyak Dien", "RA Kartini", "Dewi Sartika", "Martha Christina"], answer: 0, diff: "hard"},
+      {question: "Nama presiden ke-4 Indonesia adalah?", choices: ["Gus Dur", "Megawati", "Habibie", "Soeharto"], answer: 0, diff: "hard"},
+      {question: "Nama kapal legendaris Indonesia adalah?", choices: ["Pinisi", "Titanic", "Victoria", "Santa Maria"], answer: 0, diff: "hard"},
+      {question: "Tokoh proklamator Indonesia lahir di kota?", choices: ["Blitar & Bukittinggi", "Surabaya & Medan", "Jakarta & Bandung", "Palembang & Manado"], answer: 0, diff: "hard"},
+      {question: "Nama penulis lagu Indonesia Raya adalah?", choices: ["Wage Rudolf Supratman", "Ismail Marzuki", "Cornel Simanjuntak", "Ibu Sud"], answer: 0, diff: "hard"}
+    ],
+    6: [
+      // EASY
+      {question: "Nama bandara internasional di Jakarta adalah?", choices: ["Soekarno-Hatta", "Ngurah Rai", "Kualanamu", "Adisutjipto"], answer: 0, diff: "easy"},
+      {question: "Ibu kota Indonesia adalah?", choices: ["Jakarta", "Surabaya", "Medan", "Bandung"], answer: 0, diff: "easy"},
+      {question: "Batas Indonesia di sebelah utara adalah?", choices: ["Malaysia", "Australia", "Papua Nugini", "Timor Leste"], answer: 0, diff: "easy"},
+      {question: "Hari Kemerdekaan Indonesia diperingati setiap tanggal?", choices: ["17 Agustus", "28 Oktober", "1 Juni", "10 November"], answer: 0, diff: "easy"},
+      {question: "Rumah adat Minangkabau disebut?", choices: ["Gadang", "Joglo", "Toraja", "Limas"], answer: 0, diff: "easy"},
+      {question: "Danau terbesar di Indonesia adalah?", choices: ["Toba", "Sentarum", "Maninjau", "Singkarak"], answer: 0, diff: "easy"},
+      {question: "Provinsi termuda di Indonesia adalah?", choices: ["Kalimantan Utara", "Papua Barat", "Bangka Belitung", "Gorontalo"], answer: 0, diff: "easy"},
+      {question: "Nama pulau terluas kedua di Indonesia adalah?", choices: ["Sumatra", "Jawa", "Sulawesi", "Papua"], answer: 3, diff: "easy"},
+      {question: "Komoditas utama ekspor Indonesia adalah?", choices: ["Kelapa sawit", "Beras", "Jagung", "Kopi"], answer: 0, diff: "easy"},
+      {question: "Rumah adat dari Jawa Tengah adalah?", choices: ["Joglo", "Gadang", "Tongkonan", "Limas"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Nama penemu radio adalah?", choices: ["Marconi", "Einstein", "Newton", "Faraday"], answer: 0, diff: "normal"},
+      {question: "Suku bangsa terbesar di Indonesia adalah?", choices: ["Jawa", "Sunda", "Batak", "Bugis"], answer: 0, diff: "normal"},
+      {question: "Hari Sumpah Pemuda diperingati setiap tanggal?", choices: ["28 Oktober", "17 Agustus", "1 Juni", "10 November"], answer: 0, diff: "normal"},
+      {question: "Letak geografis Indonesia adalah antara dua samudra dan dua ...", choices: ["Benua", "Gunung", "Pulau", "Danau"], answer: 0, diff: "normal"},
+      {question: "Rumah adat dari Sulawesi Selatan adalah?", choices: ["Tongkonan", "Gadang", "Joglo", "Limas"], answer: 0, diff: "normal"},
+      {question: "Sungai terpanjang di Indonesia adalah?", choices: ["Kapuas", "Mahakam", "Brantas", "Asahan"], answer: 0, diff: "normal"},
+      {question: "Hari Pahlawan diperingati setiap tanggal?", choices: ["10 November", "17 Agustus", "1 Juni", "28 Oktober"], answer: 0, diff: "normal"},
+      {question: "Kerajaan Hindu tertua di Indonesia adalah?", choices: ["Kutai", "Majapahit", "Sriwijaya", "Tarumanegara"], answer: 0, diff: "normal"},
+      {question: "Candi Borobudur terletak di provinsi?", choices: ["Jawa Tengah", "Yogyakarta", "Jawa Timur", "Bali"], answer: 0, diff: "normal"},
+      {question: "Nama pahlawan wanita dari Maluku?", choices: ["Martha Christina Tiahahu", "RA Kartini", "Cut Nyak Dien", "Dewi Sartika"], answer: 0, diff: "normal"},
+      {question: "Kerajaan Islam pertama di Indonesia adalah?", choices: ["Samudra Pasai", "Demak", "Aceh", "Banten"], answer: 0, diff: "normal"},
+      {question: "Nama penulis lagu Indonesia Raya adalah?", choices: ["Wage Rudolf Supratman", "Ismail Marzuki", "Cornel Simanjuntak", "Ibu Sud"], answer: 0, diff: "normal"},
+      {question: "Suku bangsa asli Kalimantan adalah?", choices: ["Dayak", "Bugis", "Betawi", "Minang"], answer: 0, diff: "normal"},
+      {question: "Nama bandara internasional di Medan adalah?", choices: ["Kualanamu", "Soekarno-Hatta", "Ngurah Rai", "Adisutjipto"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Sistem tanam paksa pada masa penjajahan disebut?", choices: ["Cultuurstelsel", "Autarky", "Merkantilisme", "Feodalisme"], answer: 0, diff: "hard"},
+      {question: "Nama penemu listrik adalah?", choices: ["Thomas Edison", "Einstein", "Newton", "Faraday"], answer: 0, diff: "hard"},
+      {question: "Kerajaan Majapahit berpusat di daerah?", choices: ["Trowulan", "Yogyakarta", "Surabaya", "Semarang"], answer: 0, diff: "hard"},
+      {question: "Sistem pemerintahan kerajaan Majapahit adalah?", choices: ["Monarki", "Republik", "Federasi", "Demokrasi"], answer: 0, diff: "hard"},
+      {question: "Pulau Komodo termasuk provinsi?", choices: ["Nusa Tenggara Timur", "Nusa Tenggara Barat", "Bali", "Sulawesi Selatan"], answer: 0, diff: "hard"},
+      {question: "Nama pahlawan wanita dari Aceh?", choices: ["Cut Nyak Dien", "RA Kartini", "Dewi Sartika", "Martha Christina"], answer: 0, diff: "hard"},
+      {question: "Nama presiden ke-4 Indonesia adalah?", choices: ["Gus Dur", "Megawati", "Habibie", "Soeharto"], answer: 0, diff: "hard"},
+      {question: "Nama kapal legendaris Indonesia adalah?", choices: ["Pinisi", "Titanic", "Victoria", "Santa Maria"], answer: 0, diff: "hard"},
+      {question: "Tokoh proklamator Indonesia lahir di kota?", choices: ["Blitar & Bukittinggi", "Surabaya & Medan", "Jakarta & Bandung", "Palembang & Manado"], answer: 0, diff: "hard"},
+      {question: "Nama penulis lagu Indonesia Raya adalah?", choices: ["Wage Rudolf Supratman", "Ismail Marzuki", "Cornel Simanjuntak", "Ibu Sud"], answer: 0, diff: "hard"}
+    ]
+  },  bahasa: {
+    4: [
+      // EASY
+      {question: "Bahasa nasional Indonesia adalah?", choices: ["Bahasa Indonesia", "Bahasa Jawa", "Bahasa Sunda", "Bahasa Inggris"], answer: 0, diff: "easy"},
+      {question: "Huruf vokal dalam alfabet Indonesia adalah?", choices: ["A, I, U, E, O", "B, C, D, F, G", "A, B, C, D, E", "I, U, E, O, U"], answer: 0, diff: "easy"},
+      {question: "Nama lain dari kata sifat adalah?", choices: ["Adjektiva", "Nomina", "Verba", "Pronomina"], answer: 0, diff: "easy"},
+      {question: "Nama lain dari kata kerja adalah?", choices: ["Verba", "Nomina", "Adjektiva", "Pronomina"], answer: 0, diff: "easy"},
+      {question: "Kata ganti orang pertama tunggal adalah?", choices: ["Saya", "Kami", "Kalian", "Dia"], answer: 0, diff: "easy"},
+      {question: "Kalimat yang mengandung ajakan biasanya menggunakan kata?", choices: ["Mari", "Karena", "Tetapi", "Namun"], answer: 0, diff: "easy"},
+      {question: "Sinonim dari kata 'besar' adalah?", choices: ["Gede", "Kecil", "Panjang", "Pendek"], answer: 0, diff: "easy"},
+      {question: "Antonim dari kata 'panjang' adalah?", choices: ["Pendek", "Kecil", "Besar", "Tinggi"], answer: 0, diff: "easy"},
+      {question: "Nama penulis cerita Siti Nurbaya adalah?", choices: ["Marah Rusli", "Pramoedya Ananta Toer", "Andrea Hirata", "Chairil Anwar"], answer: 0, diff: "easy"},
+      {question: "Kata tanya untuk menanyakan tempat adalah?", choices: ["Di mana", "Mengapa", "Kapan", "Berapa"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Kata baku dari 'aktifitas' adalah?", choices: ["Aktivitas", "Aktifitas", "Aktivitasnya", "Aktivasi"], answer: 0, diff: "normal"},
+      {question: "Kalimat 'Ayah pergi ke pasar.' merupakan kalimat?", choices: ["Kalimat berita", "Kalimat tanya", "Kalimat perintah", "Kalimat seru"], answer: 0, diff: "normal"},
+      {question: "Peribahasa 'Seperti air di daun talas' berarti?", choices: ["Tidak tetap pendiriannya", "Rajin bekerja", "Berhati-hati", "Cepat belajar"], answer: 0, diff: "normal"},
+      {question: "Tokoh utama dalam cerita disebut?", choices: ["Protagonis", "Antagonis", "Tritagonis", "Figuran"], answer: 0, diff: "normal"},
+      {question: "Kata depan yang digunakan untuk menyatakan waktu adalah?", choices: ["Pada", "Di", "Ke", "Dari"], answer: 0, diff: "normal"},
+      {question: "Sinonim dari kata 'indah' adalah?", choices: ["Elok", "Kotor", "Panas", "Cepat"], answer: 0, diff: "normal"},
+      {question: "Antonim dari kata 'mudah' adalah?", choices: ["Susah", "Besar", "Panjang", "Pendek"], answer: 0, diff: "normal"},
+      {question: "Kalimat 'Jangan membuang sampah sembarangan!' adalah kalimat?", choices: ["Perintah", "Berita", "Tanya", "Seru"], answer: 0, diff: "normal"},
+      {question: "Kata kerja dalam kalimat 'Ibu memasak di dapur' adalah?", choices: ["Memasak", "Ibu", "Dapur", "Di"], answer: 0, diff: "normal"},
+      {question: "Nama pujangga terkenal Indonesia yang menulis 'Aku' adalah?", choices: ["Chairil Anwar", "Sapardi Djoko Damono", "Goenawan Mohamad", "WS Rendra"], answer: 0, diff: "normal"},
+      {question: "Kata tanya untuk menanyakan waktu adalah?", choices: ["Kapan", "Siapa", "Di mana", "Mengapa"], answer: 0, diff: "normal"},
+      {question: "Kata baku dari 'resiko' adalah?", choices: ["Risiko", "Resiko", "Resikoan", "Resikonya"], answer: 0, diff: "normal"},
+      {question: "Nama penulis novel 'Laskar Pelangi' adalah?", choices: ["Andrea Hirata", "Pramoedya Ananta Toer", "Marah Rusli", "Chairil Anwar"], answer: 0, diff: "normal"},
+      {question: "Kata bilangan menunjukkan jumlah, contohnya?", choices: ["Satu", "Cepat", "Tinggi", "Kecil"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Majas yang membandingkan dua hal secara langsung adalah?", choices: ["Metafora", "Personifikasi", "Simile", "Hiperbola"], answer: 0, diff: "hard"},
+      {question: "Peribahasa 'Bagai pinang dibelah dua' berarti?", choices: ["Mirip sekali", "Tidak mirip", "Berbeda jauh", "Berpisah"], answer: 0, diff: "hard"},
+      {question: "Kata berimbuhan dalam kalimat 'Anak itu berlari-lari di halaman' adalah?", choices: ["Berlari-lari", "Anak", "Halaman", "Itu"], answer: 0, diff: "hard"},
+      {question: "Kalimat 'Betapa indahnya pemandangan itu!' termasuk kalimat?", choices: ["Seru", "Berita", "Tanya", "Perintah"], answer: 0, diff: "hard"},
+      {question: "Sinonim dari kata 'cepat' adalah?", choices: ["Lincah", "Lambat", "Besar", "Pendek"], answer: 0, diff: "hard"},
+      {question: "Antonim dari kata 'terang' adalah?", choices: ["Gelap", "Jernih", "Putih", "Cerah"], answer: 0, diff: "hard"},
+      {question: "Nama penulis novel 'Bumi Manusia' adalah?", choices: ["Pramoedya Ananta Toer", "Andrea Hirata", "Marah Rusli", "Chairil Anwar"], answer: 0, diff: "hard"},
+      {question: "Majas yang memberi sifat manusia pada benda disebut?", choices: ["Personifikasi", "Metafora", "Simile", "Hiperbola"], answer: 0, diff: "hard"},
+      {question: "Peribahasa 'Sudah jatuh tertimpa tangga' berarti?", choices: ["Sial berturut-turut", "Beruntung sekali", "Berhasil", "Beruntung dan sial"], answer: 0, diff: "hard"},
+      {question: "Kata baku dari 'aktifitas' adalah?", choices: ["Aktivitas", "Aktifitas", "Aktivasi", "Aktif"], answer: 0, diff: "hard"}
+    ],
+    5: [
+      // EASY
+      {question: "Kata kerja dalam kalimat 'Adik membaca buku' adalah?", choices: ["Membaca", "Adik", "Buku", "Sedang"], answer: 0, diff: "easy"},
+      {question: "Kata tanya untuk menanyakan orang adalah?", choices: ["Siapa", "Kapan", "Di mana", "Mengapa"], answer: 0, diff: "easy"},
+      {question: "Huruf vokal dalam alfabet Indonesia adalah?", choices: ["A, I, U, E, O", "B, C, D, F, G", "A, B, C, D, E", "I, U, E, O, U"], answer: 0, diff: "easy"},
+      {question: "Nama penulis novel 'Laskar Pelangi' adalah?", choices: ["Andrea Hirata", "Pramoedya Ananta Toer", "Marah Rusli", "Chairil Anwar"], answer: 0, diff: "easy"},
+      {question: "Sinonim dari kata 'indah' adalah?", choices: ["Elok", "Kotor", "Panas", "Cepat"], answer: 0, diff: "easy"},
+      {question: "Antonim dari kata 'besar' adalah?", choices: ["Kecil", "Panjang", "Pendek", "Tinggi"], answer: 0, diff: "easy"},
+      {question: "Kata tanya untuk menanyakan alasan adalah?", choices: ["Mengapa", "Siapa", "Kapan", "Di mana"], answer: 0, diff: "easy"},
+      {question: "Nama pujangga terkenal Indonesia yang menulis 'Aku' adalah?", choices: ["Chairil Anwar", "Sapardi Djoko Damono", "Goenawan Mohamad", "WS Rendra"], answer: 0, diff: "easy"},
+      {question: "Kata depan yang digunakan untuk menyatakan tempat adalah?", choices: ["Di", "Ke", "Dari", "Pada"], answer: 0, diff: "easy"},
+      {question: "Kalimat ajakan biasanya menggunakan kata?", choices: ["Mari", "Karena", "Tetapi", "Namun"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Peribahasa 'Bagaikan air di daun talas' berarti?", choices: ["Tidak tetap pendiriannya", "Rajin bekerja", "Berhati-hati", "Cepat belajar"], answer: 0, diff: "normal"},
+      {question: "Kata baku dari 'resiko' adalah?", choices: ["Risiko", "Resiko", "Resikoan", "Resikonya"], answer: 0, diff: "normal"},
+      {question: "Kata ganti orang kedua jamak adalah?", choices: ["Kalian", "Kamu", "Saya", "Dia"], answer: 0, diff: "normal"},
+      {question: "Kalimat 'Ayah pergi ke pasar.' merupakan kalimat?", choices: ["Berita", "Tanya", "Perintah", "Seru"], answer: 0, diff: "normal"},
+      {question: "Nama penulis novel 'Bumi Manusia' adalah?", choices: ["Pramoedya Ananta Toer", "Andrea Hirata", "Marah Rusli", "Chairil Anwar"], answer: 0, diff: "normal"},
+      {question: "Kata baku dari 'aktifitas' adalah?", choices: ["Aktivitas", "Aktifitas", "Aktivasi", "Aktif"], answer: 0, diff: "normal"},
+      {question: "Majas yang membandingkan dua hal secara langsung adalah?", choices: ["Metafora", "Personifikasi", "Simile", "Hiperbola"], answer: 0, diff: "normal"},
+      {question: "Peribahasa 'Bagai pinang dibelah dua' berarti?", choices: ["Mirip sekali", "Tidak mirip", "Berbeda jauh", "Berpisah"], answer: 0, diff: "normal"},
+      {question: "Kata berimbuhan dalam kalimat 'Anak itu berlari-lari di halaman' adalah?", choices: ["Berlari-lari", "Anak", "Halaman", "Itu"], answer: 0, diff: "normal"},
+      {question: "Kalimat 'Betapa indahnya pemandangan itu!' termasuk kalimat?", choices: ["Seru", "Berita", "Tanya", "Perintah"], answer: 0, diff: "normal"},
+      {question: "Sinonim dari kata 'cepat' adalah?", choices: ["Lincah", "Lambat", "Besar", "Pendek"], answer: 0, diff: "normal"},
+      {question: "Antonim dari kata 'terang' adalah?", choices: ["Gelap", "Jernih", "Putih", "Cerah"], answer: 0, diff: "normal"},
+      {question: "Majas yang memberi sifat manusia pada benda disebut?", choices: ["Personifikasi", "Metafora", "Simile", "Hiperbola"], answer: 0, diff: "normal"},
+      {question: "Peribahasa 'Sudah jatuh tertimpa tangga' berarti?", choices: ["Sial berturut-turut", "Beruntung sekali", "Berhasil", "Beruntung dan sial"], answer: 0, diff: "normal"},
+      {question: "Kata bilangan menunjukkan jumlah, contohnya?", choices: ["Satu", "Cepat", "Tinggi", "Kecil"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Nama penulis cerita Siti Nurbaya adalah?", choices: ["Marah Rusli", "Pramoedya Ananta Toer", "Andrea Hirata", "Chairil Anwar"], answer: 0, diff: "hard"},
+      {question: "Kata ganti orang ketiga tunggal adalah?", choices: ["Dia", "Saya", "Kamu", "Kalian"], answer: 0, diff: "hard"},
+      {question: "Kata depan yang digunakan untuk menyatakan waktu adalah?", choices: ["Pada", "Di", "Ke", "Dari"], answer: 0, diff: "hard"},
+      {question: "Kalimat yang mengandung larangan biasanya menggunakan kata?", choices: ["Jangan", "Mari", "Karena", "Tetapi"], answer: 0, diff: "hard"},
+      {question: "Antonim dari kata 'mudah' adalah?", choices: ["Susah", "Besar", "Panjang", "Pendek"], answer: 0, diff: "hard"},
+      {question: "Tokoh utama dalam cerita disebut?", choices: ["Protagonis", "Antagonis", "Tritagonis", "Figuran"], answer: 0, diff: "hard"},
+      {question: "Kata kerja dalam kalimat 'Ibu memasak di dapur' adalah?", choices: ["Memasak", "Ibu", "Dapur", "Di"], answer: 0, diff: "hard"},
+      {question: "Nama pujangga terkenal Indonesia yang menulis 'Aku' adalah?", choices: ["Chairil Anwar", "Sapardi Djoko Damono", "Goenawan Mohamad", "WS Rendra"], answer: 0, diff: "hard"},
+      {question: "Kata tanya untuk menanyakan waktu adalah?", choices: ["Kapan", "Siapa", "Di mana", "Mengapa"], answer: 0, diff: "hard"},
+      {question: "Kalimat 'Jangan membuang sampah sembarangan!' adalah kalimat?", choices: ["Perintah", "Berita", "Tanya", "Seru"], answer: 0, diff: "hard"}
+    ],
+    6: [
+      // EASY
+      {question: "Huruf vokal dalam alfabet Indonesia adalah?", choices: ["A, I, U, E, O", "B, C, D, F, G", "A, B, C, D, E", "I, U, E, O, U"], answer: 0, diff: "easy"},
+      {question: "Kata tanya untuk menanyakan tempat adalah?", choices: ["Di mana", "Mengapa", "Kapan", "Berapa"], answer: 0, diff: "easy"},
+      {question: "Kata ganti orang pertama tunggal adalah?", choices: ["Saya", "Kami", "Kalian", "Dia"], answer: 0, diff: "easy"},
+      {question: "Kata kerja dalam kalimat 'Adik membaca buku' adalah?", choices: ["Membaca", "Adik", "Buku", "Sedang"], answer: 0, diff: "easy"},
+      {question: "Nama penulis novel 'Laskar Pelangi' adalah?", choices: ["Andrea Hirata", "Pramoedya Ananta Toer", "Marah Rusli", "Chairil Anwar"], answer: 0, diff: "easy"},
+      {question: "Sinonim dari kata 'besar' adalah?", choices: ["Gede", "Kecil", "Panjang", "Pendek"], answer: 0, diff: "easy"},
+      {question: "Antonim dari kata 'panjang' adalah?", choices: ["Pendek", "Kecil", "Besar", "Tinggi"], answer: 0, diff: "easy"},
+      {question: "Nama penulis cerita Siti Nurbaya adalah?", choices: ["Marah Rusli", "Pramoedya Ananta Toer", "Andrea Hirata", "Chairil Anwar"], answer: 0, diff: "easy"},
+      {question: "Kalimat yang mengandung ajakan biasanya menggunakan kata?", choices: ["Mari", "Karena", "Tetapi", "Namun"], answer: 0, diff: "easy"},
+      {question: "Kata tanya untuk menanyakan waktu adalah?", choices: ["Kapan", "Siapa", "Di mana", "Mengapa"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "Kata baku dari 'aktifitas' adalah?", choices: ["Aktivitas", "Aktifitas", "Aktivasi", "Aktif"], answer: 0, diff: "normal"},
+      {question: "Kalimat 'Ayah pergi ke pasar.' merupakan kalimat?", choices: ["Kalimat berita", "Kalimat tanya", "Kalimat perintah", "Kalimat seru"], answer: 0, diff: "normal"},
+      {question: "Peribahasa 'Seperti air di daun talas' berarti?", choices: ["Tidak tetap pendiriannya", "Rajin bekerja", "Berhati-hati", "Cepat belajar"], answer: 0, diff: "normal"},
+      {question: "Tokoh utama dalam cerita disebut?", choices: ["Protagonis", "Antagonis", "Tritagonis", "Figuran"], answer: 0, diff: "normal"},
+      {question: "Kata depan yang digunakan untuk menyatakan waktu adalah?", choices: ["Pada", "Di", "Ke", "Dari"], answer: 0, diff: "normal"},
+      {question: "Sinonim dari kata 'indah' adalah?", choices: ["Elok", "Kotor", "Panas", "Cepat"], answer: 0, diff: "normal"},
+      {question: "Antonim dari kata 'mudah' adalah?", choices: ["Susah", "Besar", "Panjang", "Pendek"], answer: 0, diff: "normal"},
+      {question: "Kalimat 'Jangan membuang sampah sembarangan!' adalah kalimat?", choices: ["Perintah", "Berita", "Tanya", "Seru"], answer: 0, diff: "normal"},
+      {question: "Kata kerja dalam kalimat 'Ibu memasak di dapur' adalah?", choices: ["Memasak", "Ibu", "Dapur", "Di"], answer: 0, diff: "normal"},
+      {question: "Nama pujangga terkenal Indonesia yang menulis 'Aku' adalah?", choices: ["Chairil Anwar", "Sapardi Djoko Damono", "Goenawan Mohamad", "WS Rendra"], answer: 0, diff: "normal"},
+      {question: "Kata tanya untuk menanyakan waktu adalah?", choices: ["Kapan", "Siapa", "Di mana", "Mengapa"], answer: 0, diff: "normal"},
+      {question: "Kata baku dari 'resiko' adalah?", choices: ["Risiko", "Resiko", "Resikoan", "Resikonya"], answer: 0, diff: "normal"},
+      {question: "Nama penulis novel 'Bumi Manusia' adalah?", choices: ["Pramoedya Ananta Toer", "Andrea Hirata", "Marah Rusli", "Chairil Anwar"], answer: 0, diff: "normal"},
+      {question: "Kata bilangan menunjukkan jumlah, contohnya?", choices: ["Satu", "Cepat", "Tinggi", "Kecil"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "Majas yang membandingkan dua hal secara langsung adalah?", choices: ["Metafora", "Personifikasi", "Simile", "Hiperbola"], answer: 0, diff: "hard"},
+      {question: "Peribahasa 'Bagai pinang dibelah dua' berarti?", choices: ["Mirip sekali", "Tidak mirip", "Berbeda jauh", "Berpisah"], answer: 0, diff: "hard"},
+      {question: "Kata berimbuhan dalam kalimat 'Anak itu berlari-lari di halaman' adalah?", choices: ["Berlari-lari", "Anak", "Halaman", "Itu"], answer: 0, diff: "hard"},
+      {question: "Kalimat 'Betapa indahnya pemandangan itu!' termasuk kalimat?", choices: ["Seru", "Berita", "Tanya", "Perintah"], answer: 0, diff: "hard"},
+      {question: "Sinonim dari kata 'cepat' adalah?", choices: ["Lincah", "Lambat", "Besar", "Pendek"], answer: 0, diff: "hard"},
+      {question: "Antonim dari kata 'terang' adalah?", choices: ["Gelap", "Jernih", "Putih", "Cerah"], answer: 0, diff: "hard"},
+      {question: "Nama penulis novel 'Bumi Manusia' adalah?", choices: ["Pramoedya Ananta Toer", "Andrea Hirata", "Marah Rusli", "Chairil Anwar"], answer: 0, diff: "hard"},
+      {question: "Majas yang memberi sifat manusia pada benda disebut?", choices: ["Personifikasi", "Metafora", "Simile", "Hiperbola"], answer: 0, diff: "hard"},
+      {question: "Peribahasa 'Sudah jatuh tertimpa tangga' berarti?", choices: ["Sial berturut-turut", "Beruntung sekali", "Berhasil", "Beruntung dan sial"], answer: 0, diff: "hard"},
+      {question: "Kata baku dari 'aktifitas' adalah?", choices: ["Aktivitas", "Aktifitas", "Aktivasi", "Aktif"], answer: 0, diff: "hard"}
+    ]
+  },
+inggris: {
+    4: [
+      // EASY
+      {question: "What is the English word for 'merah'?", choices: ["Red", "Green", "Blue", "Yellow"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'buku'?", choices: ["Book", "Bag", "Box", "Bottle"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'sekolah'?", choices: ["School", "Market", "House", "Shop"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'air'?", choices: ["Water", "Wind", "Fire", "Earth"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'ibu'?", choices: ["Mother", "Father", "Brother", "Sister"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'apel'?", choices: ["Apple", "Banana", "Orange", "Grape"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'rumah'?", choices: ["House", "Car", "Road", "River"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'matahari'?", choices: ["Sun", "Moon", "Star", "Sky"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'kucing'?", choices: ["Cat", "Dog", "Fish", "Bird"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'kursi'?", choices: ["Chair", "Table", "Bed", "Door"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "What is the opposite of 'big'?", choices: ["Small", "Long", "Tall", "Short"], answer: 0, diff: "normal"},
+      {question: "Which word means 'bahagia'?", choices: ["Happy", "Sad", "Angry", "Afraid"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'anak laki-laki'?", choices: ["Boy", "Girl", "Man", "Woman"], answer: 0, diff: "normal"},
+      {question: "Which is a fruit?", choices: ["Apple", "Car", "Book", "House"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'pintu'?", choices: ["Door", "Window", "Floor", "Wall"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'guru'?", choices: ["Teacher", "Student", "Doctor", "Nurse"], answer: 0, diff: "normal"},
+      {question: "Which word means 'cepat'?", choices: ["Fast", "Slow", "Rich", "Poor"], answer: 0, diff: "normal"},
+      {question: "Which is an animal?", choices: ["Dog", "Table", "Bottle", "Shoe"], answer: 0, diff: "normal"},
+      {question: "What is the opposite of 'up'?", choices: ["Down", "Left", "Right", "Top"], answer: 0, diff: "normal"},
+      {question: "Which word means 'belajar'?", choices: ["Study", "Sleep", "Eat", "Play"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'teman'?", choices: ["Friend", "Enemy", "Brother", "Sister"], answer: 0, diff: "normal"},
+      {question: "Which is a color?", choices: ["Blue", "Book", "Chair", "Tree"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'mobil'?", choices: ["Car", "Bike", "Bus", "Train"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'dokter'?", choices: ["Doctor", "Nurse", "Teacher", "Student"], answer: 0, diff: "normal"},
+      {question: "What is the opposite of 'cold'?", choices: ["Hot", "Warm", "Cool", "Dry"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "What is the past tense of 'go'?", choices: ["Went", "Gone", "Go", "Going"], answer: 0, diff: "hard"},
+      {question: "Which word means 'berbicara'?", choices: ["Speak", "Read", "Write", "Listen"], answer: 0, diff: "hard"},
+      {question: "What is the plural of 'child'?", choices: ["Children", "Childs", "Childrens", "Child"], answer: 0, diff: "hard"},
+      {question: "What is the English for 'menggambar'?", choices: ["Draw", "Dance", "Drive", "Drink"], answer: 0, diff: "hard"},
+      {question: "Which word means 'berlari'?", choices: ["Run", "Jump", "Walk", "Fly"], answer: 0, diff: "hard"},
+      {question: "What is the comparative form of 'good'?", choices: ["Better", "Best", "Gooder", "Most Good"], answer: 0, diff: "hard"},
+      {question: "Which is a vegetable?", choices: ["Carrot", "Apple", "Banana", "Grape"], answer: 0, diff: "hard"},
+      {question: "Which word means 'mendengarkan'?", choices: ["Listen", "Speak", "Read", "Write"], answer: 0, diff: "hard"},
+      {question: "What is the English for 'menulis'?", choices: ["Write", "Read", "Speak", "Listen"], answer: 0, diff: "hard"},
+      {question: "What is the opposite of 'easy'?", choices: ["Difficult", "Simple", "Happy", "Sad"], answer: 0, diff: "hard"}
+    ],
+    5: [
+      // EASY
+      {question: "What is the English word for 'anjing'?", choices: ["Dog", "Cat", "Bird", "Fish"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'meja'?", choices: ["Table", "Chair", "Bed", "Sofa"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'roti'?", choices: ["Bread", "Rice", "Cake", "Meat"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'mata'?", choices: ["Eye", "Nose", "Ear", "Mouth"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'tangan'?", choices: ["Hand", "Foot", "Head", "Back"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'jam'?", choices: ["Clock", "Book", "Chair", "Window"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'langit'?", choices: ["Sky", "Sea", "Sand", "Stone"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'daun'?", choices: ["Leaf", "Tree", "Root", "Stem"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'burung'?", choices: ["Bird", "Dog", "Cat", "Cow"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'pisang'?", choices: ["Banana", "Apple", "Orange", "Grape"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "What is the opposite of 'young'?", choices: ["Old", "Small", "Tall", "Short"], answer: 0, diff: "normal"},
+      {question: "Which word means 'lembut'?", choices: ["Soft", "Hard", "Strong", "Weak"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'perempuan'?", choices: ["Woman", "Man", "Girl", "Boy"], answer: 0, diff: "normal"},
+      {question: "Which is a drink?", choices: ["Milk", "Bread", "Cake", "Meat"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'jendela'?", choices: ["Window", "Door", "Floor", "Wall"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'murid'?", choices: ["Student", "Teacher", "Doctor", "Nurse"], answer: 0, diff: "normal"},
+      {question: "Which word means 'pelan'?", choices: ["Slow", "Fast", "Rich", "Poor"], answer: 0, diff: "normal"},
+      {question: "Which is a color?", choices: ["Yellow", "Book", "Chair", "Tree"], answer: 0, diff: "normal"},
+      {question: "What is the opposite of 'left'?", choices: ["Right", "Down", "Up", "Top"], answer: 0, diff: "normal"},
+      {question: "Which word means 'memasak'?", choices: ["Cook", "Eat", "Drink", "Sleep"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'ayah'?", choices: ["Father", "Mother", "Brother", "Sister"], answer: 0, diff: "normal"},
+      {question: "Which word means 'bermain'?", choices: ["Play", "Study", "Sleep", "Eat"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'kereta'?", choices: ["Train", "Car", "Bus", "Bike"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'perawat'?", choices: ["Nurse", "Doctor", "Teacher", "Student"], answer: 0, diff: "normal"},
+      {question: "What is the opposite of 'long'?", choices: ["Short", "Tall", "Small", "Big"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "What is the past tense of 'eat'?", choices: ["Ate", "Eating", "Eaten", "Eat"], answer: 0, diff: "hard"},
+      {question: "Which word means 'mendaki'?", choices: ["Climb", "Jump", "Run", "Walk"], answer: 0, diff: "hard"},
+      {question: "What is the plural of 'foot'?", choices: ["Feet", "Foots", "Feets", "Foot"], answer: 0, diff: "hard"},
+      {question: "What is the English for 'mengendarai'?", choices: ["Drive", "Draw", "Drink", "Dance"], answer: 0, diff: "hard"},
+      {question: "Which word means 'berenang'?", choices: ["Swim", "Jump", "Walk", "Fly"], answer: 0, diff: "hard"},
+      {question: "What is the comparative form of 'bad'?", choices: ["Worse", "Worst", "Badder", "Most Bad"], answer: 0, diff: "hard"},
+      {question: "Which is a fruit?", choices: ["Orange", "Carrot", "Potato", "Tomato"], answer: 0, diff: "hard"},
+      {question: "Which word means 'membaca'?", choices: ["Read", "Write", "Speak", "Listen"], answer: 0, diff: "hard"},
+      {question: "What is the English for 'menari'?", choices: ["Dance", "Sing", "Run", "Walk"], answer: 0, diff: "hard"},
+      {question: "What is the opposite of 'difficult'?", choices: ["Easy", "Hard", "Happy", "Sad"], answer: 0, diff: "hard"}
+    ],
+    6: [
+      // EASY
+      {question: "What is the English word for 'duduk'?", choices: ["Sit", "Stand", "Walk", "Run"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'minum'?", choices: ["Drink", "Eat", "Sleep", "Cook"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'makan'?", choices: ["Eat", "Drink", "Sleep", "Cook"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'berjalan'?", choices: ["Walk", "Run", "Jump", "Climb"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'bermain'?", choices: ["Play", "Study", "Sleep", "Eat"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'berlari'?", choices: ["Run", "Walk", "Jump", "Fly"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'tidur'?", choices: ["Sleep", "Eat", "Drink", "Cook"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'mandi'?", choices: ["Bath", "Eat", "Sleep", "Cook"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'belajar'?", choices: ["Study", "Play", "Sleep", "Eat"], answer: 0, diff: "easy"},
+      {question: "What is the English word for 'menulis'?", choices: ["Write", "Read", "Speak", "Listen"], answer: 0, diff: "easy"},
+      // NORMAL
+      {question: "What is the opposite of 'happy'?", choices: ["Sad", "Angry", "Afraid", "Excited"], answer: 0, diff: "normal"},
+      {question: "Which word means 'berbicara'?", choices: ["Speak", "Read", "Write", "Listen"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'mendengarkan'?", choices: ["Listen", "Speak", "Read", "Write"], answer: 0, diff: "normal"},
+      {question: "Which is a vegetable?", choices: ["Potato", "Apple", "Banana", "Grape"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'menggambar'?", choices: ["Draw", "Dance", "Drive", "Drink"], answer: 0, diff: "normal"},
+      {question: "Which word means 'berpikir'?", choices: ["Think", "Play", "Sleep", "Eat"], answer: 0, diff: "normal"},
+      {question: "Which is an animal?", choices: ["Fish", "Table", "Bottle", "Shoe"], answer: 0, diff: "normal"},
+      {question: "What is the opposite of 'slow'?", choices: ["Fast", "Rich", "Poor", "Strong"], answer: 0, diff: "normal"},
+      {question: "Which word means 'menonton'?", choices: ["Watch", "Listen", "Read", "Speak"], answer: 0, diff: "normal"},
+      {question: "What is the plural of 'mouse'?", choices: ["Mice", "Mouses", "Mouse", "Meese"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'berbicara'?", choices: ["Speak", "Read", "Write", "Listen"], answer: 0, diff: "normal"},
+      {question: "Which word means 'berlari'?", choices: ["Run", "Walk", "Jump", "Fly"], answer: 0, diff: "normal"},
+      {question: "What is the opposite of 'low'?", choices: ["High", "Tall", "Small", "Big"], answer: 0, diff: "normal"},
+      {question: "What is the English for 'menyanyi'?", choices: ["Sing", "Dance", "Draw", "Run"], answer: 0, diff: "normal"},
+      {question: "What is the opposite of 'short'?", choices: ["Long", "Tall", "Small", "Big"], answer: 0, diff: "normal"},
+      // HARD
+      {question: "What is the past tense of 'see'?", choices: ["Saw", "See", "Seen", "Seeing"], answer: 0, diff: "hard"},
+      {question: "Which word means 'melompat'?", choices: ["Jump", "Run", "Walk", "Climb"], answer: 0, diff: "hard"},
+      {question: "What is the plural of 'person'?", choices: ["People", "Persons", "Person", "Peoples"], answer: 0, diff: "hard"},
+      {question: "What is the English for 'mengemudi'?", choices: ["Drive", "Draw", "Drink", "Dance"], answer: 0, diff: "hard"},
+      {question: "Which word means 'memilih'?", choices: ["Choose", "Chose", "Choice", "Choosing"], answer: 0, diff: "hard"},
+      {question: "What is the comparative form of 'far'?", choices: ["Farther", "Farthest", "Farrer", "Most Far"], answer: 0, diff: "hard"},
+      {question: "Which is a fruit?", choices: ["Grape", "Carrot", "Potato", "Tomato"], answer: 0, diff: "hard"},
+      {question: "Which word means 'mengerti'?", choices: ["Understand", "Know", "See", "Hear"], answer: 0, diff: "hard"},
+      {question: "What is the English for 'menangis'?", choices: ["Cry", "Laugh", "Smile", "Shout"], answer: 0, diff: "hard"},
+      {question: "What is the opposite of 'heavy'?", choices: ["Light", "Strong", "Weak", "Hard"], answer: 0, diff: "hard"}
+    ]
   }
 };
-
-// Berhasil selesai quiz
-function endQuizSuccess() {
-  clearInterval(timerInterval);
-  showTimer(false);
-  quizBox.classList.add('hidden');
-  resultBox.classList.remove('hidden');
-  failBox.classList.add('hidden');
-  scoreEl.textContent = `Skor Anda: ${score} dari ${quizQuestions.length}`;
-}
-
-// Gagal karena waktu habis
-function endQuizFail() {
-  isQuizFail = true;
-  showTimer(false);
-  quizBox.classList.add('hidden');
-  resultBox.classList.add('hidden');
-  failBox.classList.remove('hidden');
-}
-
-// Tombol ulangi quiz
-restartBtn.onclick = () => {
-  timeBox.classList.remove('hidden');
-  resultBox.classList.add('hidden');
-  quizBox.classList.add('hidden');
-  failBox.classList.add('hidden');
-};
-
-// Tombol kembali ke mapel
-backBtnQuiz.onclick = backToMapel;
-backBtnResult.onclick = backToMapel;
-failBackBtn.onclick = backToMapel;
-function backToMapel() {
-  clearInterval(timerInterval);
-  currentSubject = null;
-  quizTime = 0;
-  timeBox.classList.add('hidden');
-  subjectBox.classList.remove('hidden');
-  quizBox.classList.add('hidden');
-  resultBox.classList.add('hidden');
-  failBox.classList.add('hidden');
-}
-
-// Tombol "Coba Lagi" pada fail
-retryBtn.onclick = () => {
-  timeBox.classList.remove('hidden');
-  failBox.classList.add('hidden');
-  quizBox.classList.add('hidden');
-  resultBox.classList.add('hidden');
-};
-
-// Shuffle array (Fisher-Yates)
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}

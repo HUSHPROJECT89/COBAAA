@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JUSTHINK - Quiz Edukasi</title>
+  <title>JUSTHINK - Quiz SD Kelas 4 5 6</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -12,13 +12,40 @@
     <div id="subject-box">
       <h2>Pilih Mata Pelajaran</h2>
       <div class="subjects">
-        <button class="subject-btn" data-subject="umum">Pengetahuan Umum</button>
         <button class="subject-btn" data-subject="matematika">Matematika</button>
+        <button class="subject-btn" data-subject="umum">Pengetahuan Umum</button>
         <button class="subject-btn" data-subject="ipa">IPA</button>
         <button class="subject-btn" data-subject="ips">IPS</button>
         <button class="subject-btn" data-subject="bahasa">Bahasa Indonesia</button>
         <button class="subject-btn" data-subject="inggris">Bahasa Inggris</button>
       </div>
+    </div>
+    <div id="kelas-box" class="hidden">
+      <h2>Pilih Kelas</h2>
+      <div class="kelas-list">
+        <button class="kelas-btn" data-kelas="4">Kelas 4</button>
+        <button class="kelas-btn" data-kelas="5">Kelas 5</button>
+        <button class="kelas-btn" data-kelas="6">Kelas 6</button>
+      </div>
+      <button id="back-btn-kelas" class="back-btn">Kembali ke Pilihan Mapel</button>
+    </div>
+    <div id="difficulty-box" class="hidden">
+      <h2>Pilih Mode Soal</h2>
+      <div class="difficulty-table">
+        <div class="difficulty-card easy" data-diff="easy" data-count="10" tabindex="0">
+          <div class="diff-title">Easy</div>
+          <div class="diff-count">10 Soal</div>
+        </div>
+        <div class="difficulty-card normal" data-diff="normal" data-count="25" tabindex="0">
+          <div class="diff-title">Normal</div>
+          <div class="diff-count">25 Soal</div>
+        </div>
+        <div class="difficulty-card hard" data-diff="hard" data-count="35" tabindex="0">
+          <div class="diff-title">Hard</div>
+          <div class="diff-count">35 Soal</div>
+        </div>
+      </div>
+      <button id="back-btn-diff" class="back-btn">Kembali ke Pilihan Kelas</button>
     </div>
     <div id="time-box" class="hidden">
       <h2>Pilih Waktu Kuis</h2>
@@ -27,9 +54,12 @@
         <button class="time-btn" data-time="180">3 Menit</button>
         <button class="time-btn" data-time="300">5 Menit</button>
       </div>
-      <button id="back-btn-time" class="back-btn" style="margin-top:18px;">Kembali ke Pilihan Mapel</button>
+      <button id="back-btn-time" class="back-btn">Kembali ke Pilihan Mode</button>
     </div>
     <div id="quiz-box" class="hidden">
+      <div class="quiz-header">
+        <span id="info-subject"></span> | <span id="info-kelas"></span> | <span id="info-diff"></span>
+      </div>
       <div class="timer-area"><span id="timer"></span></div>
       <div id="question"></div>
       <ul id="choices"></ul>
@@ -51,6 +81,15 @@
     </div>
     <footer>
       <span class="brand">JUSTHINK</span> &copy; 2025
+      <div class="how-to">
+        <strong>Cara Menambah Soal:</strong>
+        <ul>
+          <li>Buka <span>script.js</span> → cari bagian <span>soalBank</span>.</li>
+          <li>Copy-paste soal dari web sumber (lihat README atau chat di atas).</li>
+          <li>Setiap soal: <code>{question: "Teks soal", choices: ["a", "b", ...], answer: 0, diff: "easy"}</code></li>
+        </ul>
+        <small>Soal bisa diisi sesuai kelas, mapel, dan tingkat kesulitan!</small>
+      </div>
     </footer>
   </div>
   <script src="script.js"></script>
